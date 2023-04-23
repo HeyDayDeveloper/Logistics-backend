@@ -1,5 +1,6 @@
 package cn.anselyuki.repository.entity;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -12,10 +13,11 @@ import java.util.Date;
 @Data
 @Entity
 @Table(name = "tb_user")
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private String id;
     private String username;
     private String nickname;
     private String email;
@@ -28,6 +30,5 @@ public class User {
     private Integer type;
     private String password;
     private Date birth;
-    private Long departmentId;
     private String avatar;
 }
