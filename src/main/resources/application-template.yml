@@ -2,3 +2,6 @@ spring:
   datasource:
     username:
     password:
+
+jwt:
+  secret:

@@ -17,3 +17,10 @@ info:
   title: Logistics Center API
   description: Logistics Backend Center
   version: ${version?:unknown}
+
+jwt:
+  header: Authorization
+  expire: 21600
+
+cache:
+  default-expire: 60
