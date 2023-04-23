@@ -1,12 +1,21 @@
+server:
+  # 8848钛金接口.jpg
+  port: 2333
+
 spring:
   profiles:
-    active: template
+    active: dev
+  jpa:
+    hibernate:
+      # 更新或者创建数据表结构
+      ddl-auto: update
+    # 控制台显示SQL
+    show-sql: false
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/logisticSystem
 
 info:
   title: Logistics Center API
   description: Logistics Backend Center
   version: ${version?:unknown}
-
-server:
-  # 8848钛金接口.jpg
-  port: 2333
