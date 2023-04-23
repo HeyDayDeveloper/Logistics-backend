@@ -1,4 +1,4 @@
-package cn.anselyuki.service.Impl;
+package cn.anselyuki.service.impl;
 
 import cn.anselyuki.repository.UserRepository;
 import cn.anselyuki.repository.entity.User;
@@ -10,7 +10,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 @Service

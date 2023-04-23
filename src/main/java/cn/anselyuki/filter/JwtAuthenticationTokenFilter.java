@@ -28,15 +28,16 @@ import java.util.Objects;
 /**
  * @author AnselYuki
  */
+@SuppressWarnings("ALL")
 @Setter
 @Component
 @RequiredArgsConstructor
 public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
-    private final RedisCache redisCache;
     @Value("${jwt.secret}")
     private static String SECRET;
     @Value("${jwt.header}")
     private static String HEADER;
+    private final RedisCache redisCache;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws IOException, ServletException {

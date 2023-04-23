@@ -10,9 +10,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 
 /**
  * @author AnselYuki
- * @date 2023/4/23 16:03
  */
-
 @EnableAsync
 @EnableCaching
 @EnableScheduling

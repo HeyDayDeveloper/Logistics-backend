@@ -25,21 +25,20 @@ public class LoginUser implements UserDetails {
     private String token = "";
 
     private Set<String> permissions;
+    private List<SimpleGrantedAuthority> authorities;
 
     public LoginUser(User user, Set<String> permissions) {
         this.user = user;
         this.permissions = permissions;
     }
 
-    private List<SimpleGrantedAuthority> authorities;
+    public LoginUser(User user) {
+        this.user = user;
+    }
 
     public void setPermissions(Set<String> permissions) {
         this.authorities = permissions.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
         this.permissions = permissions;
-    }
-
-    public LoginUser(User user) {
-        this.user = user;
     }
 
     /**

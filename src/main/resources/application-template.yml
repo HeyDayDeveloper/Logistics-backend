@@ -2,6 +2,10 @@ spring:
   datasource:
     username:
     password:
+  data:
+    redis:
+      port: 6379
+      host: localhost
 
 jwt:
   secret:

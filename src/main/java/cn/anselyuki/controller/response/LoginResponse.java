@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class LoginResponse{
+public class LoginResponse {
     private String token;
     private String validBefore;
     private String validAfter;

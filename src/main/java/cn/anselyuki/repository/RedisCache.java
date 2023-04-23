@@ -23,10 +23,9 @@ import java.util.function.Supplier;
 @Component
 @RequiredArgsConstructor
 public class RedisCache {
+    private final StringRedisTemplate redisTemplate;
     @Value("${cache.default-expire}")
     private int expire;
-
-    private final StringRedisTemplate redisTemplate;
 
     public <T> void setData(final String key, T value) {
         setCache(key, value, 0, TimeUnit.SECONDS);

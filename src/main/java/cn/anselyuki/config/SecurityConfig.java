@@ -11,7 +11,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.access.AccessDeniedHandlerImpl;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
@@ -21,46 +20,31 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 public class SecurityConfig {
     /**
-     * 添加放行接口在此处
+     * 允许匿名访问，禁止已登录用户访问
      */
     private static final String[] URL_WHITELIST = {
             "/user/login",
             "/user/register",
-            "/user/sendRegistrationToken"
     };
-
+    /**
+     * 允许任何人访问
+     */
     private static final String[] URL_PERMIT_ALL = {
             "/",
             "/version",
-            "/user/activateAccount",
-            "/user/password/reset_request",
-            "/user/password/reset",
             "/swagger-ui.html",
             "/v3/api-docs/**",
             "/swagger-ui/**",
-            "/arknights/level",
-            "/copilot/query",
-            "/copilot/get/**",
-            "/copilot/rating",
-            "/comments/query"
     };
-
-    //添加需要权限1才能访问的接口
+    //用户接口，权限等级1
     private static final String[] URL_AUTHENTICATION_1 = {
-            "/copilot/delete",
-            "/copilot/update",
-            "/copilot/upload",
-            "/comments/add",
-            "/comments/delete"
+            "/user/logout",
     };
-
-    private static final String[] URL_AUTHENTICATION_2 = {
-            "/copilot/refactorExistingDatabase"
-    };
+    //管理员接口，权限等级2
+    private static final String[] URL_AUTHENTICATION_2 = {};
     private final AuthenticationConfiguration authenticationConfiguration;
     private final JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
     private final AuthenticationEntryPointImpl authenticationEntryPoint;
-//    private final AccessDeniedHandlerImpl accessDeniedHandler;
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {

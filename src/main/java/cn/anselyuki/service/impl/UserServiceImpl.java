@@ -1,26 +1,26 @@
-package cn.anselyuki.service.Impl;
+package cn.anselyuki.service.impl;
 
+import cn.anselyuki.controller.request.userLoginDTO;
+import cn.anselyuki.controller.response.LoginResponse;
+import cn.anselyuki.controller.response.Result;
 import cn.anselyuki.controller.response.UserInfoVO;
 import cn.anselyuki.repository.RedisCache;
+import cn.anselyuki.repository.UserRepository;
+import cn.anselyuki.service.UserService;
 import cn.anselyuki.service.model.LoginUser;
 import cn.hutool.core.date.DateField;
 import cn.hutool.core.date.DateTime;
 import cn.hutool.jwt.JWTPayload;
 import cn.hutool.jwt.JWTUtil;
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.RandomStringUtils;
-
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
-import cn.anselyuki.controller.request.userLoginDTO;
-import cn.anselyuki.controller.response.LoginResponse;
-import cn.anselyuki.controller.response.Result;
-import cn.anselyuki.repository.UserRepository;
-import cn.anselyuki.service.UserService;
-import jakarta.transaction.Transactional;
-import lombok.RequiredArgsConstructor;
 
 import javax.security.auth.login.LoginException;
 import java.time.LocalDateTime;
@@ -55,7 +55,7 @@ public class UserServiceImpl implements UserService {
      * @param loginDTO 登录参数
      * @return 携带了token的封装类
      */
-    public Result<LoginResponse> login(userLoginDTO loginDTO) throws LoginException {
+    public ResponseEntity<Result<LoginResponse>> login(userLoginDTO loginDTO) throws LoginException {
         // 使用 AuthenticationManager 中的 authenticate 进行用户认证
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
                 loginDTO.getUsername(), loginDTO.getPassword());

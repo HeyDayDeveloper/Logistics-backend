@@ -33,6 +33,7 @@ dependencies {
 
     implementation 'cn.hutool:hutool-core:5.8.16'
     implementation 'cn.hutool:hutool-jwt:5.8.18'
+    implementation 'org.yaml:snakeyaml:2.0'
 
 //    implementation 'org.springframework.boot:spring-boot-starter-test'
 }

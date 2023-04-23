@@ -3,7 +3,6 @@ package cn.anselyuki.config;
 
 import cn.anselyuki.common.annotation.CurrentUser;
 import io.swagger.v3.oas.models.Components;
-import io.swagger.v3.oas.models.ExternalDocumentation;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.info.License;
@@ -25,27 +24,20 @@ import java.util.Optional;
 @SpringBootConfiguration
 public class SpringDocConfig {
 
+    private final String securitySchemeName = "Bearer";
     @Value("${info.version}")
     private String version;
-
     @Value("${info.title}")
     private String title;
-
     @Value("${info.description}")
     private String description;
-
     @Value("${jwt.header}")
     private String securitySchemeHeader;
-
-    private final String securitySchemeName = "Bearer";
 
     @Bean
     public OpenAPI emergencyLogistics() {
         return new OpenAPI()
                 .info(docInfos())
-                .externalDocs(new ExternalDocumentation()
-                        .description("GitHub repo")
-                        .url("https://github.com/MaaAssistantArknights/MaaBackendCenter"))
                 .components(new Components()
                         .addSecuritySchemes(securitySchemeName,
                                 new SecurityScheme()

@@ -5,7 +5,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
  * @author AnselYuki
- * @date 2023/4/23 16:10
  */
 @Data
 @ConfigurationProperties("info")

@@ -9,8 +9,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @SpringBootTest
 public class PasswordTest {
     @Test
-    public void testGenPwd(){
-        String password="123";
+    public void testGenPwd() {
+        String password = "123";
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         String encode = encoder.encode(password);
         System.out.println("encode = " + encode);
