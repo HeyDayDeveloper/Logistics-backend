@@ -1,0 +1,12 @@
+spring:
+  profiles:
+    active: template
+
+info:
+  title: Logistics Center API
+  description: Logistics Backend Center
+  version: ${version?:unknown}
+
+server:
+  # 8848钛金接口.jpg
+  port: 2333
