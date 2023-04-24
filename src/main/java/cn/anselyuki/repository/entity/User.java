@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 import org.springframework.beans.BeanUtils;
 
 import java.util.Date;
@@ -14,6 +15,7 @@ import java.util.Date;
  */
 @Data
 @Entity
+@Accessors(chain = true)
 @Table(schema = "logisticSystem", name = "tb_user")
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @NoArgsConstructor

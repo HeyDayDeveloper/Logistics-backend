@@ -24,7 +24,7 @@ import java.util.Date;
  * @author AnselYuki
  */
 @Slf4j
-@Tag(name = "User")
+@Tag(name = "User",description = "用户相关接口")
 @RequestMapping("user")
 @RestController
 @RequiredArgsConstructor
@@ -47,19 +47,12 @@ public class UserController {
      */
     @AccessLimit(times = 5, second = 15)
     @PostMapping("register")
+    @Operation(summary = "用户注册", description = "接受用户名与密码，返回用户信息")
     public ResponseEntity<Result<Object>> register(@RequestBody UserRegisterDTO userRegisterDTO) {
         User user = new User(userRegisterDTO);
         String encode = new BCryptPasswordEncoder().encode(user.getPassword());
-        //设置id为空,防止前端传入id,用于生成UUID
-        user.setId(null);
-        //注册接口默认注册为普通用户
-        user.setType(1);
-        //密码加密
-        user.setPassword(encode);
-        //设置创建时间
-        user.setCreateTime(new Date());
-        //设置用户状态
-        user.setStatus(1);
+        //设置id为空,防止前端传入id,用于生成UUID,注册接口默认注册为普通用户
+        user.setId(null).setType(1).setPassword(encode).setCreateTime(new Date()).setStatus(1);
         UserInfoVO userInfo;
         try {
             User save = userRepository.save(user);
@@ -76,6 +69,7 @@ public class UserController {
      * @return 用户列表
      */
     @GetMapping("list")
+    @Operation(summary = "获取用户列表", description = "获取用户列表")
     public ResponseEntity<Result<Object>> list() {
         return Result.success(userRepository.findAll());
     }

@@ -54,9 +54,10 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
         } catch (Exception ignored) {
             log.info(ignored.getMessage());
         } finally {
-            log.info("[{}] Access Interface [{}]",
-                    SecurityContextHolder.getContext().getAuthentication().getName(),
-                    request.getRequestURI());
+            if (Objects.nonNull(SecurityContextHolder.getContext().getAuthentication()))
+                log.info("[{}] Access Interface [{}]",
+                        SecurityContextHolder.getContext().getAuthentication().getName(),
+                        request.getRequestURI());
             filterChain.doFilter(request, response);
         }
     }
