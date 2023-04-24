@@ -65,6 +65,23 @@ public class UserController {
     }
 
     /**
+     * 用户删除
+     * 必须传入用户名与密码，其他信息可选
+     *
+     * @param id 用户信息
+     */
+    @DeleteMapping("delete/{id}")
+    @Operation(summary = "删除用户", description = "删除用户")
+    public ResponseEntity<Result<Object>> delete(@PathVariable String id) {
+        try {
+            userRepository.deleteById(id);
+        } catch (Exception e) {
+            return Result.fail(403,"用户删除失败");
+        }
+        return Result.success("删除成功！");
+    }
+
+    /**
      * 获取用户列表
      *
      * @return 用户列表
@@ -75,9 +92,4 @@ public class UserController {
         return Result.success(userRepository.findAll());
     }
 
-    @DeleteMapping("delete/{id}")
-    @Operation(summary = "删除用户", description = "删除用户")
-    public ResponseEntity<Result<Object>> delete(@PathVariable String id) {
-        return null;
-    }
 }
