@@ -1,6 +1,6 @@
 package cn.anselyuki.service;
 
-import cn.anselyuki.controller.request.userLoginDTO;
+import cn.anselyuki.controller.request.UserLoginDTO;
 import cn.anselyuki.controller.response.LoginResponse;
 import cn.anselyuki.controller.response.Result;
 import org.springframework.http.ResponseEntity;
@@ -17,5 +17,5 @@ public interface UserService {
      * @param user 用户名与密码
      * @return token
      */
-    ResponseEntity<Result<LoginResponse>> login(userLoginDTO user) throws LoginException;
+    ResponseEntity<Result<LoginResponse>> login(UserLoginDTO user) throws LoginException;
 }

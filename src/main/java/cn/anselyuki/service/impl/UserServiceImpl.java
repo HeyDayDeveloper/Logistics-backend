@@ -1,6 +1,6 @@
 package cn.anselyuki.service.impl;
 
-import cn.anselyuki.controller.request.userLoginDTO;
+import cn.anselyuki.controller.request.UserLoginDTO;
 import cn.anselyuki.controller.response.LoginResponse;
 import cn.anselyuki.controller.response.Result;
 import cn.anselyuki.controller.response.UserInfoVO;
@@ -55,7 +55,7 @@ public class UserServiceImpl implements UserService {
      * @param loginDTO 登录参数
      * @return 携带了token的封装类
      */
-    public ResponseEntity<Result<LoginResponse>> login(userLoginDTO loginDTO) throws LoginException {
+    public ResponseEntity<Result<LoginResponse>> login(UserLoginDTO loginDTO) throws LoginException {
         // 使用 AuthenticationManager 中的 authenticate 进行用户认证
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
                 loginDTO.getUsername(), loginDTO.getPassword());

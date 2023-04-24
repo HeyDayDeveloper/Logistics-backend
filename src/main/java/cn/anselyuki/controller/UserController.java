@@ -1,6 +1,7 @@
 package cn.anselyuki.controller;
 
-import cn.anselyuki.controller.request.userLoginDTO;
+import cn.anselyuki.controller.request.UserLoginDTO;
+import cn.anselyuki.controller.request.UserRegisterDTO;
 import cn.anselyuki.controller.response.LoginResponse;
 import cn.anselyuki.controller.response.Result;
 import cn.anselyuki.controller.response.UserInfoVO;
@@ -34,7 +35,7 @@ public class UserController {
 
     @PostMapping("login")
     @Operation(summary = "用户登录", description = "接受用户名与密码，返回token")
-    public ResponseEntity<Result<LoginResponse>> login(@RequestBody userLoginDTO user) throws LoginException {
+    public ResponseEntity<Result<LoginResponse>> login(@RequestBody UserLoginDTO user) throws LoginException {
         return userService.login(user);
     }
 
@@ -46,7 +47,8 @@ public class UserController {
      * @return 注册成功的用户信息
      */
     @PostMapping("register")
-    public ResponseEntity<Result<Object>> register(@RequestBody User user) {
+    public ResponseEntity<Result<Object>> register(@RequestBody UserRegisterDTO userRegisterDTO) {
+        User user = new User(userRegisterDTO);
         if (userRepository.existsByUsername(user.getUsername())) {
             return Result.fail(409, "用户名已存在");
         }
