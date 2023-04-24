@@ -4,7 +4,7 @@ import cn.anselyuki.controller.request.UserLoginDTO;
 import cn.anselyuki.controller.response.LoginResponse;
 import cn.anselyuki.controller.response.Result;
 import cn.anselyuki.controller.response.UserInfoVO;
-import cn.anselyuki.repository.RedisCache;
+import cn.anselyuki.common.utils.RedisCache;
 import cn.anselyuki.repository.UserRepository;
 import cn.anselyuki.service.UserService;
 import cn.anselyuki.service.model.LoginUser;

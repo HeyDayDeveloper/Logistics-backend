@@ -19,12 +19,13 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.security.auth.login.LoginException;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author AnselYuki
  */
 @Slf4j
-@Tag(name = "User",description = "用户相关接口")
+@Tag(name = "User", description = "用户相关接口")
 @RequestMapping("user")
 @RestController
 @RequiredArgsConstructor
@@ -70,7 +71,13 @@ public class UserController {
      */
     @GetMapping("list")
     @Operation(summary = "获取用户列表", description = "获取用户列表")
-    public ResponseEntity<Result<Object>> list() {
+    public ResponseEntity<Result<List<User>>> list() {
         return Result.success(userRepository.findAll());
+    }
+
+    @DeleteMapping("delete/{id}")
+    @Operation(summary = "删除用户", description = "删除用户")
+    public ResponseEntity<Result<Object>> delete(@PathVariable String id) {
+        return null;
     }
 }

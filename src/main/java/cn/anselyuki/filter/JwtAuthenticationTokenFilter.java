@@ -1,6 +1,6 @@
 package cn.anselyuki.filter;
 
-import cn.anselyuki.repository.RedisCache;
+import cn.anselyuki.common.utils.RedisCache;
 import cn.anselyuki.service.model.LoginUser;
 import cn.hutool.core.convert.NumberWithFormat;
 import cn.hutool.core.date.DateTime;
