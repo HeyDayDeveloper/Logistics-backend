@@ -26,7 +26,6 @@ public class UserDetailServiceImpl implements UserDetailsService {
             throw new UsernameNotFoundException("用户不存在");
         }
 
-        log.info(user.toString());
         Integer status = user.getStatus();
         Set<String> authorities = new HashSet<>();
 

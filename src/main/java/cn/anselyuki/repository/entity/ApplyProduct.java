@@ -1,35 +1,31 @@
 package cn.anselyuki.repository.entity;
 
-import cn.anselyuki.controller.request.ProductDTO;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
-import org.springframework.beans.BeanUtils;
 
 import java.util.Date;
 
 @Data
 @Entity
 @Accessors(chain = true)
-@Table(schema = "logisticSystem", name = "tb_product")
+@Table(schema = "logisticSystem", name = "tb_apply_product")
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @NoArgsConstructor
-public class Product {
+public class ApplyProduct {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
-    private String name;
+    private String pid;
+    private String uid;
     private Integer num;
-    private String category;
+    private Integer status;
     private Date createTime;
     private Date modifiedTime;
-    private String remark;
-    private String unit;
+    private String phoneNumber;
+    private String email;
+    private String address;
     private String degree;
-
-    public Product(ProductDTO productDTO) {
-        BeanUtils.copyProperties(productDTO, this);
-    }
 }

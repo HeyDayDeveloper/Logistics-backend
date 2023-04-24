@@ -11,15 +11,20 @@ import java.util.Date;
 @Data
 @Entity
 @Accessors(chain = true)
-@Table(schema = "logisticSystem", name = "tb_product_category")
+@Table(schema = "logisticSystem", name = "tb_In_Stock")
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @NoArgsConstructor
-public class ProductCategory {
+public class InStock {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
-    private String name;
+    // 产品ID
+    private String pid;
+    // 操作管理员ID
+    private String uid;
+    // 捐赠人ID
+    private String donationId;
+    private String num;
     private String remark;
     private Date createTime;
-    private Date modifiedTime;
 }
