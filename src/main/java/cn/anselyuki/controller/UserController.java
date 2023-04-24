@@ -73,12 +73,12 @@ public class UserController {
     @DeleteMapping("delete/{id}")
     @Operation(summary = "删除用户", description = "删除用户")
     public ResponseEntity<Result<Object>> delete(@PathVariable String id) {
-        try {
+        if (userRepository.existsById(id)) {
             userRepository.deleteById(id);
-        } catch (Exception e) {
-            return Result.fail(403,"用户删除失败");
+            return Result.success("删除成功！");
+        } else {
+            return Result.fail(404,"用户删除失败");
         }
-        return Result.success("删除成功！");
     }
 
     /**
