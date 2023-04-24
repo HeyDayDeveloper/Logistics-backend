@@ -13,6 +13,7 @@ import java.util.Date;
 public class UserRegisterDTO {
     private String username;
     private String nickname;
+    private String password;
     private String email;
     private String phoneNumber;
     private Boolean sex;

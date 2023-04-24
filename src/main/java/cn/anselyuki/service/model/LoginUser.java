@@ -60,9 +60,8 @@ public class LoginUser implements UserDetails {
 
     /**
      * Spring Security框架中的username即唯一身份标识（ID）
-     * 效果同getEmail
      *
-     * @return 用户邮箱
+     * @return 用户名
      */
     @Override
     @JsonIgnore

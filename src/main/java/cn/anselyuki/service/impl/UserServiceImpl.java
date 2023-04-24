@@ -56,6 +56,8 @@ public class UserServiceImpl implements UserService {
      * @return 携带了token的封装类
      */
     public ResponseEntity<Result<LoginResponse>> login(UserLoginDTO loginDTO) throws LoginException {
+        System.out.println("secret = " + secret);
+        System.out.println("expire = " + expire);
         // 使用 AuthenticationManager 中的 authenticate 进行用户认证
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
                 loginDTO.getUsername(), loginDTO.getPassword());
