@@ -4,26 +4,37 @@
 
 ## 开发技术栈
 
-> 注意：本项目强制使用JDK17，低版本JDK无法编译（SpringBoot 3要求）
+> 注意：本项目强制使用 JDK17，低版本 JDK 无法编译（SpringBoot 3 要求）
+>
+> 开发环境为JDK19，实测可以编译通过，更高版本的JDK未测试
 
 - JDK 17 (LTS)
 - SpringBoot 3.0.6
-    - spring-jpa
-    - spring-security
-    - springdoc-openapi
+  - Spring Data JPA
+  - Spring Security
 - MySQL 8.0
-- Redis
+- Redis 7.0
 
 ## 项目结构
 
-- `config`存放spring配置
-- `controller`交互层
-    - `request`入参类型
-    - `response`响应类型
-- `repository`数据仓库层，用于和数据库交互
-    - `entity`与数据库字段对应的类型
-- `service`业务处理层，复杂或者公用逻辑放在这里（注：您无需为每个类型都提供对应接口，只有当接口在可见未来有多个实现的时候才考虑建立接口）
+开发中需要关注的目录结构如下
+
+- `controller`:交互层
+    - `request`:入参类型
+    - `response`:响应类型
+- `repository`:数据仓库层，用于和数据库交互
+    - `entity`:与数据库字段对应的类型
+- `service`业务处理层，复杂或者公用逻辑放在这里
     - `model`应用内传输用类型放这里
+
+> 您无需为每个类型都提供对应接口，只有当接口在可见未来有多个实现的时候才考虑建立接口
+
+其余目录结构如下，您无需过多关注
+
+- `config`:存放 spring 配置
+- `common`:存放通用的类型
+- `security`:存放安全相关的配置
+- `util`:存放工具类
 
 ## 安装开发环境
 
@@ -36,9 +47,9 @@
 
 ### 数据库与中间件
 
-本地测试使用的 MySQL 版本为 8.0.32，Redis 版本为 7.0.11
+本地测试使用的 MySQL 版本为 8.0.32,Redis 版本为 7.0.11
 
-> 如果您是Windows用户，可以从 https://github.com/tporadowski/redis 中下载版本较旧的 redis 使用
+> 如果您是 Windows 用户，可以从 https://github.com/tporadowski/redis 中下载版本较旧的 redis 使用
 
 ## 启动环境
 
@@ -53,4 +64,3 @@
 `./gradlew idea` 或者 `./gradlew eclipse` 生成 IDE 配置文件
 
 最后运行 MainApplication 类里的 main 方法
-

@@ -1,7 +1,7 @@
 package cn.anselyuki.security.filter;
 
 import cn.anselyuki.common.utils.RedisCache;
-import cn.anselyuki.security.model.LoginUser;
+import cn.anselyuki.security.LoginUser;
 import cn.hutool.core.convert.NumberWithFormat;
 import cn.hutool.core.date.DateTime;
 import cn.hutool.jwt.JWT;

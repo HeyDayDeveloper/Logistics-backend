@@ -7,7 +7,7 @@ import cn.anselyuki.controller.response.UserInfoVO;
 import cn.anselyuki.common.utils.RedisCache;
 import cn.anselyuki.repository.UserRepository;
 import cn.anselyuki.service.UserService;
-import cn.anselyuki.security.model.LoginUser;
+import cn.anselyuki.security.LoginUser;
 import cn.hutool.core.date.DateField;
 import cn.hutool.core.date.DateTime;
 import cn.hutool.jwt.JWTPayload;
