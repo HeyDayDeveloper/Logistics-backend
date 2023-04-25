@@ -22,7 +22,7 @@ import java.lang.reflect.Method;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @author Baip1995
+ * @author AnselYuki
  */
 @Component
 public class AccessLimitInterceptHandlerImpl implements HandlerInterceptor {

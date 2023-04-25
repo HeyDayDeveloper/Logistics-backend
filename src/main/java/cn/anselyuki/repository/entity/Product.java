@@ -20,13 +20,15 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
+    @Column(unique = true)
     private String name;
     private Integer num;
-    private String category;
+    private String categoryId;
     private Date createTime;
     private Date modifiedTime;
     private String remark;
     private String unit;
+    //需求紧迫度
     private String degree;
 
     public Product(ProductDTO productDTO) {

@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
+import org.springframework.data.domain.Persistable;
 
 import java.util.Date;
 
@@ -14,7 +15,7 @@ import java.util.Date;
 @Table(schema = "logisticSystem", name = "tb_apply_product")
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @NoArgsConstructor
-public class ApplyProduct {
+public class ApplyProduct implements Persistable<String> {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
@@ -28,4 +29,14 @@ public class ApplyProduct {
     private String email;
     private String address;
     private String degree;
+
+    /**
+     * 订单可能存在重复的信息，通过继承Persistable实现该方法后可以强制使 JPA save 时一定会执行 insert sql
+     *
+     * @return 固定True
+     */
+    @Override
+    public boolean isNew() {
+        return true;
+    }
 }

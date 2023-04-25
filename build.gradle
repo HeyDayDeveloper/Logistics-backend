@@ -6,7 +6,7 @@ plugins {
 }
 
 group = 'cn.anselyuki'
-version = '1.0-SNAPSHOT'
+version = '114.514'
 
 repositories {
     maven {
@@ -20,8 +20,6 @@ processResources {
 }
 
 dependencies {
-    annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final'
-
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-test'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
@@ -33,9 +31,8 @@ dependencies {
 
     implementation 'cn.hutool:hutool-core:5.8.16'
     implementation 'cn.hutool:hutool-jwt:5.8.18'
+    //引入新版本的snakeyaml替换较旧版本，解决CVE漏洞
     implementation 'org.yaml:snakeyaml:2.0'
-
-//    implementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
 test {
