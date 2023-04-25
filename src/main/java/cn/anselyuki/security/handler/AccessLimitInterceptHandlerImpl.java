@@ -1,4 +1,4 @@
-package cn.anselyuki.handler;
+package cn.anselyuki.security.handler;
 
 import cn.anselyuki.common.annotation.AccessLimit;
 import cn.anselyuki.common.utils.IpUtils;

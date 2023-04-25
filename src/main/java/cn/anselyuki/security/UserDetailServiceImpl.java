@@ -1,8 +1,8 @@
-package cn.anselyuki.service.impl;
+package cn.anselyuki.security;
 
 import cn.anselyuki.repository.UserRepository;
 import cn.anselyuki.repository.entity.User;
-import cn.anselyuki.service.model.LoginUser;
+import cn.anselyuki.security.model.LoginUser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;

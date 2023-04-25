@@ -1,4 +1,4 @@
-package cn.anselyuki.service.model;
+package cn.anselyuki.security.model;
 
 import cn.anselyuki.repository.entity.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;

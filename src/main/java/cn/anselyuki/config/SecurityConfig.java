@@ -1,7 +1,7 @@
 package cn.anselyuki.config;
 
-import cn.anselyuki.filter.JwtAuthenticationTokenFilter;
-import cn.anselyuki.handler.AuthenticationEntryPointImpl;
+import cn.anselyuki.security.filter.JwtAuthenticationTokenFilter;
+import cn.anselyuki.security.handler.AuthenticationEntryPointImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.context.annotation.Bean;

@@ -1,6 +1,6 @@
 package cn.anselyuki.config;
 
-import cn.anselyuki.handler.AccessLimitInterceptHandlerImpl;
+import cn.anselyuki.security.handler.AccessLimitInterceptHandlerImpl;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
