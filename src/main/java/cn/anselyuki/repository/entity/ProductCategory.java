@@ -1,10 +1,12 @@
 package cn.anselyuki.repository.entity;
 
+import cn.anselyuki.controller.request.ProductCategoryDTO;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
+import org.springframework.beans.BeanUtils;
 
 import java.util.Date;
 
@@ -22,4 +24,8 @@ public class ProductCategory {
     private String remark;
     private Date createTime;
     private Date modifiedTime;
+
+    public ProductCategory(ProductCategoryDTO productCategoryDTO) {
+        BeanUtils.copyProperties(productCategoryDTO, this);
+    }
 }

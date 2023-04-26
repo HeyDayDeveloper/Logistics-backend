@@ -39,6 +39,7 @@ public class ProductController {
         } catch (DataIntegrityViolationException e) {
             return Result.fail(403,"物资已经存在");
         } catch (Exception e) {
+            e.printStackTrace();
             return Result.fail(500, "系统内部失败,请检查日志");
         }
         return Result.success(product);
