@@ -66,4 +66,24 @@ public class ProductCategoryController {
         }
         return Result.success(save);
     }
+
+    /**
+     * 物资分类删除
+     * 通过PathVariable接收id进行删除
+     *
+     * @param id 物资ID
+     * @return 删除执行状态
+     */
+    @DeleteMapping("delete/{id}")
+    @Operation(summary = "删除物资分类", description = "根据ID删除物资")
+    public ResponseEntity<Result<Object>> deleteProductCategory(@PathVariable String id) {
+        if (!productCategoryRepository.existsById(id))
+            return Result.fail(404, "物资分类不存在");
+        try {
+            productCategoryRepository.deleteById(id);
+        } catch (Exception e) {
+            Result.fail(403, "删除物资分类失败");
+        }
+        return Result.success(null);
+    }
 }
