@@ -1,5 +1,6 @@
 package cn.anselyuki.controller;
 
+import cn.anselyuki.common.utils.JpaUtils;
 import cn.anselyuki.controller.request.ProductDTO;
 import cn.anselyuki.controller.response.Result;
 import cn.anselyuki.repository.ProductRepository;
@@ -10,10 +11,10 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @Slf4j
@@ -37,7 +38,7 @@ public class ProductController {
         try {
             productRepository.save(product);
         } catch (DataIntegrityViolationException e) {
-            return Result.fail(403,"物资已经存在");
+            return Result.fail(403, "物资已经存在");
         } catch (Exception e) {
             e.printStackTrace();
             return Result.fail(500, "系统内部失败,请检查日志");
@@ -67,15 +68,23 @@ public class ProductController {
     @PutMapping("update")
     @Operation(summary = "更新物资", description = "更新物资,更新物资，通过传入参数的id更新物资参数")
     public ResponseEntity<Result<Product>> updateProduct(Product product) {
-        if (product.getId().isBlank() || productRepository.existsById(product.getId()))
+        if (product.getId().isBlank())
+            return Result.fail(404, "物资ID不能为空");
+        Product save = productRepository.findById(product.getId()).orElse(null);
+        if (save != null) {
+            // 通过工具类将非空属性拷贝到save中
+            JpaUtils.copyNotNullProperties(product, save);
+            // 更新修改时间
+            product.setModifiedTime(new Date());
+        } else {
             return Result.fail(404, "该物资不存在");
-        Product saved;
+        }
         try {
-            saved = productRepository.save(product);
+            productRepository.save(save);
         } catch (Exception e) {
             return Result.fail(403, "更新物资失败");
         }
-        return Result.success(saved);
+        return Result.success(save);
     }
 
     @GetMapping("list")

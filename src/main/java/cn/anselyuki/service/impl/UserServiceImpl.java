@@ -1,13 +1,13 @@
 package cn.anselyuki.service.impl;
 
+import cn.anselyuki.common.utils.RedisCache;
 import cn.anselyuki.controller.request.UserLoginDTO;
 import cn.anselyuki.controller.response.LoginResponse;
 import cn.anselyuki.controller.response.Result;
 import cn.anselyuki.controller.response.UserInfoVO;
-import cn.anselyuki.common.utils.RedisCache;
 import cn.anselyuki.repository.UserRepository;
-import cn.anselyuki.service.UserService;
 import cn.anselyuki.security.LoginUser;
+import cn.anselyuki.service.UserService;
 import cn.hutool.core.date.DateField;
 import cn.hutool.core.date.DateTime;
 import cn.hutool.jwt.JWTPayload;
@@ -68,6 +68,7 @@ public class UserServiceImpl implements UserService {
         // 若认证成功，使用UserID生成一个JwtToken,Token存入ResponseResult返回
         LoginUser principal = (LoginUser) authenticate.getPrincipal();
         String userId = String.valueOf(principal.getUser().getId());
+        // 生成一个随机的Token，该token作为Redis的Key，存入Redis，若Redis中不存在该Key，则拒绝访问，实现了服务器控制JWT过期
         String token = RandomStringUtils.random(16, true, true);
         DateTime now = DateTime.now();
         DateTime newTime = now.offsetNew(DateField.SECOND, expire);

@@ -8,6 +8,7 @@ import cn.anselyuki.controller.response.Result;
 import cn.anselyuki.controller.response.UserInfoVO;
 import cn.anselyuki.repository.UserRepository;
 import cn.anselyuki.repository.entity.User;
+import cn.anselyuki.security.LoginUser;
 import cn.anselyuki.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -15,6 +16,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -101,5 +103,30 @@ public class UserController {
     @Operation(summary = "获取用户列表", description = "获取用户列表")
     public ResponseEntity<Result<List<User>>> list() {
         return Result.success(userRepository.findAll());
+    }
+
+    @GetMapping("info")
+    @Operation(summary = "通过token获取用户信息", description = "直接通过token获取用户信息")
+    public ResponseEntity<Result<UserInfoVO>> info() {
+        LoginUser loginUser = (LoginUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (loginUser == null)
+            //因为拦截器的存在,此处若获取LoginUser失败,则拦截器出现异常
+            return Result.fail(500, "拦截器异常,请联系管理员");
+        return Result.success(new UserInfoVO(loginUser.getUser()));
+    }
+
+    @GetMapping("info/{id}")
+    @Operation(summary = "通过ID获取用户信息", description = "通过用户ID获取用户信息")
+    public ResponseEntity<Result<UserInfoVO>> info(@PathVariable String id) {
+        User user = userRepository.findById(id).orElse(null);
+        if (user == null)
+            return Result.fail(404, "用户不存在");
+        return Result.success(new UserInfoVO(user));
+    }
+
+    @DeleteMapping("logout")
+    @Operation(summary = "用户登出", description = "用户登出")
+    public ResponseEntity<Result<Object>> logout() {
+        return Result.success(null);
     }
 }

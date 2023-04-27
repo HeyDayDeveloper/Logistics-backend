@@ -1,9 +1,20 @@
 server:
   port: 2333
+  tomcat:
+    max-http-form-post-size: 30KB
+
+info:
+  title: Logistics Center API
+  description: Logistics Backend Center
+  version: ${version?:unknown}
 
 spring:
   profiles:
     active: dev
+  jackson:
+    property-naming-strategy: SNAKE_CASE
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
   jpa:
     hibernate:
       ddl-auto: update
@@ -13,10 +24,13 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/logisticSystem
 
-info:
-  title: Logistics Center API
-  description: Logistics Backend Center
-  version: ${version?:unknown}
+logging:
+  file:
+    name: ./logs/latest.log
+  logback:
+    rollingpolicy:
+      max-history: 14
+      clean-history-on-start: true
 
 jwt:
   header: Authorization
@@ -24,3 +38,10 @@ jwt:
 
 cache:
   default-expire: 60
+
+springdoc:
+  swagger-ui:
+    enabled: true
+  api-docs:
+    enabled: true
+  packages-to-scan: cn.anselyuki

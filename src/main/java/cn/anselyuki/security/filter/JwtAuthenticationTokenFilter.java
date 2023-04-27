@@ -50,7 +50,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
             var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);
         } catch (AuthenticationException ex) {
-            logger.trace(ex.getMessage());
+            log.info(ex.getMessage());
         } catch (Exception ignored) {
             log.info(ignored.getMessage());
         } finally {
@@ -74,7 +74,6 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
             throw new BadCredentialsException("invalid token");
         var jwt = JWTUtil.parseToken(token);
         var now = DateTime.now();
-
 
         NumberWithFormat format = (NumberWithFormat) jwt.getPayload(RegisteredPayload.NOT_BEFORE);
         Long longValue = format.longValue();
