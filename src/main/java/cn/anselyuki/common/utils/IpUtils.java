@@ -8,6 +8,7 @@ import java.net.UnknownHostException;
 /**
  * @author AnselYuki
  */
+@SuppressWarnings("unused")
 public class IpUtils {
     /**
      * 获取登录用户IP地址

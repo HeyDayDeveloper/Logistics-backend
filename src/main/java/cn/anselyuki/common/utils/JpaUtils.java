@@ -12,6 +12,7 @@ import java.util.Set;
 /**
  * @author AnselYuki
  */
+@SuppressWarnings("unused")
 public class JpaUtils {
     /**
      * 所有为空值的属性都不copy

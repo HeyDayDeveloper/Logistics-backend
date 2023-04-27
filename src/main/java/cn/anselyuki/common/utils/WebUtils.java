@@ -7,6 +7,7 @@ import java.io.IOException;
 /**
  * @author AnselYuki
  */
+@SuppressWarnings("unused")
 public class WebUtils {
     public static void renderString(HttpServletResponse response, String json, int code) {
         try {

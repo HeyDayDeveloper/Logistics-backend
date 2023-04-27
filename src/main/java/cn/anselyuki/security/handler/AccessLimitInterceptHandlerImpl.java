@@ -25,6 +25,7 @@ import java.util.concurrent.TimeUnit;
  * @author AnselYuki
  */
 @Component
+@SuppressWarnings("NullableProblems")
 public class AccessLimitInterceptHandlerImpl implements HandlerInterceptor {
 
     private static final Logger logger = LoggerFactory.getLogger(AccessLimitInterceptHandlerImpl.class);
@@ -95,8 +96,7 @@ public class AccessLimitInterceptHandlerImpl implements HandlerInterceptor {
     }
 
     @Override
-    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
-                           ModelAndView modelAndView) {
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) {
     }
 
     @Override

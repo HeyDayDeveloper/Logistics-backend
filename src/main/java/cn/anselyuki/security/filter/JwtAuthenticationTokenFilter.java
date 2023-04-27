@@ -12,9 +12,8 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.CredentialsExpiredException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -27,18 +26,15 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 import java.util.Objects;
 
-/**
- * @author AnselYuki
- */
-@SuppressWarnings("ALL")
 @Slf4j
-@Setter
 @Component
 @RequiredArgsConstructor
-@ConfigurationProperties("jwt")
+@SuppressWarnings("NullableProblems")
 public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
     private final RedisCache redisCache;
+    @Value("${jwt.secret}")
     private String secret;
+    @Value("${jwt.header}")
     private String header;
 
     @Override
@@ -49,13 +45,11 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
             var user = retrieveAndValidateUser(jwt);
             var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);
-        } catch (AuthenticationException ex) {
-            log.info(ex.getMessage());
-        } catch (Exception ignored) {
-            log.info(ignored.getMessage());
+        } catch (Exception e) {
+            log.info(e.getMessage());
         } finally {
             if (Objects.nonNull(SecurityContextHolder.getContext().getAuthentication()))
-                log.info("[{}] Access Interface [{}]",
+                log.info("[{}] Access [{}]",
                         SecurityContextHolder.getContext().getAuthentication().getName(),
                         request.getRequestURI());
             filterChain.doFilter(request, response);
@@ -76,7 +70,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
         var now = DateTime.now();
 
         NumberWithFormat format = (NumberWithFormat) jwt.getPayload(RegisteredPayload.NOT_BEFORE);
-        Long longValue = format.longValue();
+        long longValue = format.longValue();
 
         var notBefore = DateTime.of(longValue);
         if (now.isBefore(notBefore)) throw new CredentialsExpiredException("haven't come into effect");

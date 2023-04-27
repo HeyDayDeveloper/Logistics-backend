@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @Lazy(false)
+@SuppressWarnings("unused")
 public class SpringUtils implements ApplicationContextAware {
     private static ApplicationContext applicationContext = null;
 

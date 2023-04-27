@@ -19,6 +19,7 @@ import java.util.function.Supplier;
  *
  * @author AnselYuki
  */
+@SuppressWarnings("unused")
 @Setter
 @Component
 @RequiredArgsConstructor
