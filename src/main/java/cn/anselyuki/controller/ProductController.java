@@ -65,7 +65,7 @@ public class ProductController {
      * @param product 新的物资对象
      * @return 修改后的物资信息
      */
-    @PutMapping("update")
+    @PatchMapping("update")
     @Operation(summary = "更新物资", description = "更新物资,更新物资，通过传入参数的id更新物资参数")
     public ResponseEntity<Result<Product>> updateProduct(Product product) {
         if (product.getId().isBlank())

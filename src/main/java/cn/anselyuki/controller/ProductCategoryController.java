@@ -27,7 +27,7 @@ import java.util.Date;
 public class ProductCategoryController {
     private final ProductCategoryRepository productCategoryRepository;
 
-    @PostMapping("add")
+    @PutMapping("add")
     @Operation(summary = "新增物资分类", description = "新增物资分类")
     public ResponseEntity<Result<ProductCategory>> addCategory(@Valid @RequestBody ProductCategoryDTO productCategoryDTO) {
         ProductCategory category = new ProductCategory(productCategoryDTO);
@@ -43,7 +43,7 @@ public class ProductCategoryController {
         return Result.success(category);
     }
 
-    @PutMapping("update")
+    @PatchMapping("update")
     @Operation(summary = "更新物资分类", description = "通过传入的ID更新物资分类")
     public ResponseEntity<Result<ProductCategory>> updateCategory(@RequestBody ProductCategory category) {
         if (category.getId().isBlank()) {
