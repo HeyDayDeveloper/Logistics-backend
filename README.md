@@ -10,8 +10,8 @@
 
 - JDK 17 (LTS)
 - SpringBoot 3.0.6
-  - Spring Data JPA
-  - Spring Security
+    - Spring Data JPA
+    - Spring Security
 - MySQL 8.0
 - Redis 7.0
 

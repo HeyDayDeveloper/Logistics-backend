@@ -41,7 +41,7 @@ public class UserController {
      *
      * @param userLoginDTO 用户DTO
      * @return LoginResponse类，封装多种用户信息
-     * @throws LoginException
+     * @throws LoginException 登录异常
      */
     @PostMapping("login")
     @Operation(summary = "用户登录", description = "接受用户名与密码，返回token")
