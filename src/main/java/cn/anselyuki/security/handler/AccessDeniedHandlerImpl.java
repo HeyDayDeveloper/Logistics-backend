@@ -4,7 +4,6 @@ import cn.anselyuki.common.utils.SpringUtils;
 import cn.anselyuki.common.utils.WebUtils;
 import cn.anselyuki.controller.response.Result;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +23,7 @@ public class AccessDeniedHandlerImpl implements AccessDeniedHandler {
     private final ObjectMapper objectMapper;
 
     @Override
-    public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
+    public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException {
         accessDeniedException.printStackTrace();
         Result<Void> result = new Result<>(HttpStatus.UNAUTHORIZED.value(), accessDeniedException.getMessage(), null, SpringUtils.getActiveProfile());
         String json = objectMapper.writeValueAsString(result);

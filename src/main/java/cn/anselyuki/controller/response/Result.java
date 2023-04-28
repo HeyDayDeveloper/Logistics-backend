@@ -9,6 +9,7 @@ import java.io.Serializable;
 /**
  * @author AnselYuki
  */
+@SuppressWarnings("unused")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public record Result<T>(int statusCode, String message, T data, String environment) implements Serializable {
     /**
