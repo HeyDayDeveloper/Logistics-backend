@@ -1,8 +1,11 @@
 package cn.anselyuki.config;
 
 import cn.anselyuki.security.filter.JwtAuthenticationTokenFilter;
+import cn.anselyuki.security.handler.AccessDeniedHandlerImpl;
 import cn.anselyuki.security.handler.AuthenticationEntryPointImpl;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -46,6 +49,9 @@ public class SecurityConfig {
     private final AuthenticationConfiguration authenticationConfiguration;
     private final JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
     private final AuthenticationEntryPointImpl authenticationEntryPoint;
+    private final AccessDeniedHandlerImpl accessDeniedHandler;
+    @Value("${jwt.enabled}")
+    private Boolean enabled;
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -64,22 +70,26 @@ public class SecurityConfig {
                 //不通过Session获取SecurityContext
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-        //允许匿名访问的接口，如果是测试想要方便点就把这段全注释掉
-        http.authorizeHttpRequests(authorize ->
-                authorize.requestMatchers(URL_WHITELIST).anonymous()
-                        .requestMatchers(URL_PERMIT_ALL).permitAll()
-                        //权限 0 未激活 1 激活  等等.. (拥有权限1必然拥有权限0 拥有权限2必然拥有权限1、0)
-                        //指定接口需要指定权限才能访问 如果不开启RBAC注释掉这一段即可
-                        .requestMatchers(URL_AUTHENTICATION_1).hasAuthority("1")
-                        //此处用于管理员操作接口
-                        .requestMatchers(URL_AUTHENTICATION_2).hasAuthority("2")
-                        .anyRequest().authenticated());
+        //允许匿名访问的接口，如果是测试想要方便点配置application.yml中的jwt.enabled为false即可
+        if (enabled) {
+            http.authorizeHttpRequests(authorize ->
+                    authorize.requestMatchers(URL_WHITELIST).anonymous()
+                            .requestMatchers(URL_PERMIT_ALL).permitAll()
+                            //权限 0 未激活 1 激活  等等.. (拥有权限1必然拥有权限0 拥有权限2必然拥有权限1、0)
+                            //指定接口需要指定权限才能访问 如果不开启RBAC注释掉这一段即可
+                            .requestMatchers(URL_AUTHENTICATION_1).hasAuthority("1")
+                            //此处用于管理员操作接口
+                            .requestMatchers(URL_AUTHENTICATION_2).hasAuthority("2")
+                            .anyRequest().authenticated());
+        }
 
         //添加过滤器
         http.addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
 
         //配置异常处理器，处理认证失败的JSON响应
-        http.exceptionHandling().authenticationEntryPoint(authenticationEntryPoint);
+        http.exceptionHandling()
+                .authenticationEntryPoint(authenticationEntryPoint)
+                .accessDeniedHandler(accessDeniedHandler);
 
         //开启跨域请求
         http.cors();

@@ -36,9 +36,16 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
     private String secret;
     @Value("${jwt.header}")
     private String header;
+    @Value("${jwt.enabled}")
+    private Boolean enabled;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws IOException, ServletException {
+        if (!enabled) {
+            log.warn("JWT认证已禁用,请确定是否为测试环境");
+            filterChain.doFilter(request, response);
+            return;
+        }
         try {
             var token = extractToken(request);
             var jwt = parseAndValidateJwt(token);
@@ -58,9 +65,9 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 
     private String extractToken(HttpServletRequest request) throws Exception {
         if (SecurityContextHolder.getContext().getAuthentication() != null) throw new Exception("no need to auth");
-        String token = request.getHeader(header);
-        if (token == null) throw new Exception("token not found");
-        return token;
+        var head = request.getHeader(header);
+        if (head == null || !head.startsWith("Bearer ")) throw new Exception("token not found");
+        return head.substring(7);
     }
 
     private JWT parseAndValidateJwt(String token) throws BadCredentialsException {

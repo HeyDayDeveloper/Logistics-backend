@@ -82,7 +82,7 @@ public class AccessLimitInterceptHandlerImpl implements HandlerInterceptor {
                 } else {
                     // 请求过于频繁
                     logger.info(key + " 请求过于频繁");
-                    Result<Void> result = new Result<>(HttpStatus.TOO_MANY_REQUESTS.value(), "请求过于频繁", null);
+                    Result<Void> result = new Result<>(HttpStatus.TOO_MANY_REQUESTS.value(), "请求过于频繁", null, SpringUtils.getActiveProfile());
                     String json = new ObjectMapper().writeValueAsString(result);
                     WebUtils.renderString(response, json, HttpStatus.TOO_MANY_REQUESTS.value());
                     return false;

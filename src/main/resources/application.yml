@@ -31,10 +31,6 @@ logging:
       max-history: 14
       clean-history-on-start: true
 
-jwt:
-  header: Authorization
-  expire: 21600
-
 cache:
   default-expire: 60
 

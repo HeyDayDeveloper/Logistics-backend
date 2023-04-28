@@ -1,5 +1,6 @@
 package cn.anselyuki.controller.response;
 
+import cn.anselyuki.common.utils.SpringUtils;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import org.springframework.http.ResponseEntity;
 
@@ -9,7 +10,7 @@ import java.io.Serializable;
  * @author AnselYuki
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public record Result<T>(int statusCode, String message, T data) implements Serializable {
+public record Result<T>(int statusCode, String message, T data, String environment) implements Serializable {
     /**
      * 有参构造,需要全部参数
      *
@@ -19,7 +20,7 @@ public record Result<T>(int statusCode, String message, T data) implements Seria
      * @return Result
      */
     public static <T> ResponseEntity<Result<T>> success(String msg, T data) {
-        return ResponseEntity.ok(new Result<>(200, msg, data));
+        return ResponseEntity.ok(new Result<>(200, msg, data, SpringUtils.getActiveProfile()));
     }
 
     /**
@@ -65,6 +66,6 @@ public record Result<T>(int statusCode, String message, T data) implements Seria
      * @return ResponseEntity
      */
     public static <T> ResponseEntity<Result<T>> fail(int code, String msg, T data) {
-        return ResponseEntity.status(code).body(new Result<>(code, msg, data));
+        return ResponseEntity.status(code).body(new Result<>(code, msg, data, SpringUtils.getActiveProfile()));
     }
 }

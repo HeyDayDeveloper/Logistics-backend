@@ -8,4 +8,7 @@ spring:
       host: localhost
 
 jwt:
-  secret: template secret
+  enabled: true
+  header: Authorization
+  expire: 21600
+  secret: this is a secret
