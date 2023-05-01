@@ -11,7 +11,7 @@ import java.io.Serializable;
  */
 @SuppressWarnings("unused")
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public record Result<T>(int statusCode, String message, T data, String environment) implements Serializable {
+public record Result<T>(int statusCode, String message, T data, String profile) implements Serializable {
     /**
      * 有参构造,需要全部参数
      *
