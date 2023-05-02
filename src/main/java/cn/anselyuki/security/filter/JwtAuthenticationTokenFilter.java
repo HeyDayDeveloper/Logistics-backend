@@ -42,7 +42,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws IOException, ServletException {
         if (!enabled) {
-            log.warn("JWT认证已禁用,请确定是否为测试环境");
+            log.warn("JWT认证已禁用,请仅在测试环境中禁用");
             filterChain.doFilter(request, response);
             return;
         }

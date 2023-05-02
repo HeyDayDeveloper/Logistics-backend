@@ -3,6 +3,7 @@ package cn.anselyuki.controller;
 import cn.anselyuki.common.utils.JpaUtils;
 import cn.anselyuki.controller.request.ProductDTO;
 import cn.anselyuki.controller.response.Result;
+import cn.anselyuki.repository.ProductCategoryRepository;
 import cn.anselyuki.repository.ProductRepository;
 import cn.anselyuki.repository.entity.Product;
 import io.swagger.v3.oas.annotations.Operation;
@@ -24,6 +25,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProductController {
     private final ProductRepository productRepository;
+    private final ProductCategoryRepository categoryRepository;
 
     /**
      * 添加物资
@@ -34,8 +36,19 @@ public class ProductController {
     @PutMapping("add")
     @Operation(summary = "添加物资", description = "添加物资，UUID由内部生成并返回")
     public ResponseEntity<Result<Product>> addProduct(@Valid @RequestBody ProductDTO productDTO) {
-        Product product = new Product(productDTO);
+        Product product;
         try {
+            if ((productDTO.getCategoryId() == null || productDTO.getCategoryId().isBlank())) {
+                //用分类名称添加物资
+                if (productDTO.getCategory() != null && !productDTO.getCategory().isBlank()) {
+                    String categoryId = categoryRepository.findByName(productDTO.getCategory()).getId();
+                    product = new Product(productDTO).setCategoryId(categoryId);
+                } else {
+                    product = new Product(productDTO);
+                }
+            } else {
+                product = new Product(productDTO);
+            }
             productRepository.save(product);
         } catch (DataIntegrityViolationException e) {
             return Result.fail(403, "物资已经存在");
@@ -49,8 +62,7 @@ public class ProductController {
     @DeleteMapping("delete/{id}")
     @Operation(summary = "删除物资", description = "根据ID删除物资")
     public ResponseEntity<Result<Product>> deleteProduct(@PathVariable String id) {
-        if (!productRepository.existsById(id))
-            return Result.fail(404, "物资不存在");
+        if (!productRepository.existsById(id)) return Result.fail(404, "物资不存在");
         try {
             productRepository.deleteById(id);
         } catch (Exception e) {
@@ -68,8 +80,7 @@ public class ProductController {
     @PatchMapping("update")
     @Operation(summary = "更新物资", description = "更新物资,更新物资，通过传入参数的id更新物资参数")
     public ResponseEntity<Result<Product>> updateProduct(Product product) {
-        if (product.getId().isBlank())
-            return Result.fail(404, "物资ID不能为空");
+        if (product.getId().isBlank()) return Result.fail(404, "物资ID不能为空");
         Product save = productRepository.findById(product.getId()).orElse(null);
         if (save != null) {
             // 通过工具类将非空属性拷贝到save中

@@ -20,6 +20,7 @@ public class ProductCategory {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
+    @Column(unique = true)
     private String name;
     private String remark;
     private Date createTime;

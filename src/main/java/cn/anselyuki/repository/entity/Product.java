@@ -20,7 +20,7 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
-    @Column(unique = true)
+    //由于产品可能拥有同名现象，此处不使用唯一性约束
     private String name;
     private Integer num;
     private String categoryId;
