@@ -2,6 +2,7 @@ package cn.anselyuki.controller;
 
 import cn.anselyuki.common.utils.JpaUtils;
 import cn.anselyuki.controller.request.ProductDTO;
+import cn.anselyuki.controller.response.ProductVO;
 import cn.anselyuki.controller.response.Result;
 import cn.anselyuki.repository.ProductCategoryRepository;
 import cn.anselyuki.repository.ProductRepository;
@@ -50,10 +51,12 @@ public class ProductController {
                 product = new Product(productDTO);
             }
             productRepository.save(product);
-        } catch (DataIntegrityViolationException e) {
+        } catch (DataIntegrityViolationException exception) {
             return Result.fail(403, "物资已经存在");
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (NullPointerException exception) {
+            return Result.fail(404, "物资分类不存在");
+        } catch (Exception exception) {
+            exception.printStackTrace();
             return Result.fail(500, "系统内部失败,请检查日志");
         }
         return Result.success(product);
@@ -79,8 +82,8 @@ public class ProductController {
      */
     @PatchMapping("update")
     @Operation(summary = "更新物资", description = "更新物资,更新物资，通过传入参数的id更新物资参数")
-    public ResponseEntity<Result<Product>> updateProduct(Product product) {
-        if (product.getId().isBlank()) return Result.fail(404, "物资ID不能为空");
+    public ResponseEntity<Result<Product>> updateProduct(@RequestBody Product product) {
+        if (product.getId() == null || product.getId().isBlank()) return Result.fail(404, "物资ID不能为空");
         Product save = productRepository.findById(product.getId()).orElse(null);
         if (save != null) {
             // 通过工具类将非空属性拷贝到save中
@@ -100,7 +103,12 @@ public class ProductController {
 
     @GetMapping("list")
     @Operation(summary = "获取物资列表", description = "获取物资列表")
-    public ResponseEntity<Result<List<Product>>> getProduct() {
-        return Result.success(productRepository.findAll());
+    public ResponseEntity<Result<List<ProductVO>>> getProduct() {
+        List<Product> productList = productRepository.findAll();
+        List<ProductVO> productVOList = productList.stream().map(ProductVO::convert).toList();
+        for (ProductVO productVO : productVOList) {
+            productVO.setCategory(categoryRepository.findById(productVO.getCategoryId()).orElse(null));
+        }
+        return Result.success(productVOList);
     }
 }
