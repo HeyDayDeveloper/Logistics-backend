@@ -28,11 +28,11 @@ import java.util.Objects;
 @SuppressWarnings("NullableProblems")
 public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
     @Value("${jwt.secret}")
-    private static String secret;
+    private String secret;
     @Value("${jwt.header}")
-    private static String header;
+    private String header;
     @Value("${jwt.enabled}")
-    private static Boolean enabled;
+    private Boolean enabled;
     private final RedisCache redisCache;
 
     @Override
