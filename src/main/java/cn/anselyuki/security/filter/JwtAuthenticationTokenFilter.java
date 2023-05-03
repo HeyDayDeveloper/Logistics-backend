@@ -50,14 +50,14 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
             SecurityContextHolder.getContext().setAuthentication(authentication);
         } catch (Exception e) {
             log.info(e.getMessage());
-        } finally {
-            if (Objects.nonNull(SecurityContextHolder.getContext().getAuthentication())) {
-                log.info("[{}] Access [{}]",
-                        SecurityContextHolder.getContext().getAuthentication().getName(),
-                        request.getRequestURI());
-            }
-            filterChain.doFilter(request, response);
+            return;
         }
+        if (Objects.nonNull(SecurityContextHolder.getContext().getAuthentication())) {
+            log.info("[{}] Access [{}]",
+                    SecurityContextHolder.getContext().getAuthentication().getName(),
+                    request.getRequestURI());
+        }
+        filterChain.doFilter(request, response);
     }
 
     private LoginUser retrieveAndValidateUser(JWT jwt) throws AuthenticationException {
