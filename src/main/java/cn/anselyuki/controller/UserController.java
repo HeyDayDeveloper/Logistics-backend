@@ -1,6 +1,8 @@
 package cn.anselyuki.controller;
 
 import cn.anselyuki.common.annotation.AccessLimit;
+import cn.anselyuki.common.utils.AuthUtils;
+import cn.anselyuki.common.utils.RedisCache;
 import cn.anselyuki.controller.request.UserLoginDTO;
 import cn.anselyuki.controller.request.UserRegisterDTO;
 import cn.anselyuki.controller.response.LoginResponse;
@@ -12,9 +14,11 @@ import cn.anselyuki.security.LoginUser;
 import cn.anselyuki.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -33,6 +37,9 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 public class UserController {
+    @Value("${jwt.header}")
+    private static String header;
+    private final RedisCache redisCache;
     private final UserRepository userRepository;
     private final UserService userService;
 
@@ -126,7 +133,13 @@ public class UserController {
 
     @DeleteMapping("logout")
     @Operation(summary = "用户登出", description = "用户登出")
-    public ResponseEntity<Result<Object>> logout() {
+    public ResponseEntity<Result<Object>> logout(HttpServletRequest request) {
+        try {
+            String token = AuthUtils.extractToken(request, header);
+            redisCache.removeCache(token);
+        } catch (Exception e) {
+            return Result.fail(403, "登出失败");
+        }
         return Result.success(null);
     }
 }
