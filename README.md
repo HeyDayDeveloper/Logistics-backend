@@ -6,7 +6,7 @@
 
 > 注意：本项目强制使用 JDK17,低版本 JDK 无法编译(SpringBoot 3 强制要求)
 >
-> 开发环境为JDK 19,实测可以编译通过,更高版本的JDK未测试
+> 开发环境为 JDK 19,实测可以编译通过,更高版本的 JDK 未测试
 
 - JDK 17 (LTS)
 - SpringBoot 3.0.6
@@ -72,3 +72,12 @@
 ## 测试
 
 若不想为每次测试携带 token,可以在`application-dev.yml`中将`jwt.enabled`设置为`false`
+
+## Git 提交规范
+
+本项目使用 [AngularJS Git Commit Message Conventions](https://docs.google.com/document/d/1QrDFcIiPjSLDn3EL15IJygNPiHORgU1_OOAqWjiDU5Y/edit#heading=h.greljkmo14y0)
+规范,请在提交代码前阅读,简易说明参照[这里](/docs/commit.md)
+
+> 可以在 IDEA 中安装插件`Git Commit Template`来自动化提交规范
+
+Angular 规范中定义的格式有 3 个内容:`Header`,`Body`,`Footer`，其中`Header`是必需的，`Body`和`Footer`可以省略
