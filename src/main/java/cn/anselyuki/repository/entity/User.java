@@ -1,7 +1,6 @@
 package cn.anselyuki.repository.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,7 +16,6 @@ import java.util.Date;
 @Entity
 @Accessors(chain = true)
 @Table(schema = "logisticSystem", name = "tb_user")
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
 @NoArgsConstructor
 public class User {
     @Id

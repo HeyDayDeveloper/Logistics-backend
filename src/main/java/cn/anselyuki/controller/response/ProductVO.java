@@ -3,7 +3,6 @@ package cn.anselyuki.controller.response;
 import cn.anselyuki.repository.entity.Product;
 import cn.anselyuki.repository.entity.ProductCategory;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.BeanUtils;
@@ -12,7 +11,6 @@ import java.util.Date;
 
 @Data
 @NoArgsConstructor
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class ProductVO {
     private String id;
     private String name;

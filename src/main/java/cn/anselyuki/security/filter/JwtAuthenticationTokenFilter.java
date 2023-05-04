@@ -27,13 +27,13 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @SuppressWarnings("NullableProblems")
 public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
+    private final RedisCache redisCache;
     @Value("${jwt.secret}")
     private String secret;
     @Value("${jwt.header}")
     private String header;
     @Value("${jwt.enabled}")
     private Boolean enabled;
-    private final RedisCache redisCache;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws IOException, ServletException {

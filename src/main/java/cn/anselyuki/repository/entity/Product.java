@@ -1,7 +1,6 @@
 package cn.anselyuki.repository.entity;
 
 import cn.anselyuki.controller.request.ProductDTO;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,7 +13,6 @@ import java.util.Date;
 @Entity
 @Accessors(chain = true)
 @Table(schema = "logisticSystem", name = "tb_product")
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
 @NoArgsConstructor
 public class Product {
     @Id

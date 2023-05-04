@@ -1,7 +1,6 @@
 package cn.anselyuki.controller.response;
 
 import cn.anselyuki.repository.entity.User;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.BeanUtils;
@@ -13,7 +12,6 @@ import java.util.Date;
  */
 @Data
 @NoArgsConstructor
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class UserInfoVO {
     private String id;
     private String username;
