@@ -2,9 +2,11 @@ package cn.anselyuki.controller;
 
 import cn.anselyuki.common.annotation.AccessLimit;
 import cn.anselyuki.common.utils.AuthUtils;
+import cn.anselyuki.common.utils.JpaUtils;
 import cn.anselyuki.common.utils.RedisCache;
 import cn.anselyuki.controller.request.UserLoginDTO;
 import cn.anselyuki.controller.request.UserRegisterDTO;
+import cn.anselyuki.controller.request.UserUpdateDTO;
 import cn.anselyuki.controller.response.LoginResponse;
 import cn.anselyuki.controller.response.Result;
 import cn.anselyuki.controller.response.UserInfoVO;
@@ -115,11 +117,15 @@ public class UserController {
     @GetMapping("info")
     @Operation(summary = "通过token获取用户信息", description = "直接通过token获取用户信息")
     public ResponseEntity<Result<UserInfoVO>> info() {
-        LoginUser loginUser = (LoginUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (loginUser == null)
-            //因为拦截器的存在,此处若获取LoginUser失败,则拦截器出现异常
+        LoginUser loginUser;
+        try {
+            loginUser = (LoginUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        } catch (Exception e) {
+            //拦截器的存在,此处若获取LoginUser失败,则拦截器出现异常
             return Result.fail(500, "拦截器异常,请联系管理员");
-        return Result.success(new UserInfoVO(loginUser.getUser()));
+        }
+        User user = userRepository.findById(loginUser.getUser().getId()).orElse(null);
+        return Result.success(new UserInfoVO(user));
     }
 
     @GetMapping("info/{id}")
@@ -141,5 +147,25 @@ public class UserController {
             return Result.fail(403, "登出失败");
         }
         return Result.success(null);
+    }
+
+    @PatchMapping("update")
+    @Operation(summary = "更新用户信息", description = "更新用户信息")
+    public ResponseEntity<Result<Object>> update(@RequestBody UserUpdateDTO user) {
+        LoginUser loginUser;
+        try {
+            loginUser = (LoginUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        } catch (Exception e) {
+            //拦截器的存在,此处若获取LoginUser失败,则拦截器出现异常
+            return Result.fail(500, "拦截器异常,请联系管理员");
+        }
+        User save = loginUser.getUser();
+        JpaUtils.copyNotNullProperties(user, save);
+        try {
+            userRepository.save(save);
+        } catch (Exception e) {
+            return Result.fail(403, "更新失败");
+        }
+        return Result.success(save);
     }
 }

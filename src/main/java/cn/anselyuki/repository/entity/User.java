@@ -2,6 +2,7 @@ package cn.anselyuki.repository.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
@@ -22,6 +23,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
     @Column(unique = true)
+    @NotBlank(message = "用户名不能为空")
     private String username;
     @JsonIgnore
     private String password;
