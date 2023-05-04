@@ -8,11 +8,9 @@ import cn.hutool.jwt.RegisteredPayload;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.CredentialsExpiredException;
-import org.springframework.security.core.context.SecurityContextHolder;
 
 public class AuthUtils {
     public static String extractToken(HttpServletRequest request, String header) throws Exception {
-        if (SecurityContextHolder.getContext().getAuthentication() != null) throw new Exception("no need to auth");
         var head = request.getHeader(header);
         if (head == null || !head.startsWith("Bearer ")) throw new Exception("token not found");
         return head.substring(7);
