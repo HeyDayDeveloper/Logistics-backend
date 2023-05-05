@@ -86,4 +86,20 @@ public class ProductCategoryController {
         }
         return Result.success(null);
     }
+
+    /**
+     * 物资分类查询
+     * 通过PathVariable接收name进行查询
+     *
+     * @param name 物资分类名称
+     * @return 查询结果
+     */
+    @GetMapping("query/{name}")
+    @Operation(summary = "查询物资分类", description = "根据ID查询物资")
+    public ResponseEntity<Result<ProductCategory>> queryProductCategory(@PathVariable String name) {
+        if (!productCategoryRepository.existsByName(name))
+            return Result.fail(404, "物资分类不存在");
+        ProductCategory category = productCategoryRepository.findByName(name);
+        return Result.success(category);
+    }
 }
