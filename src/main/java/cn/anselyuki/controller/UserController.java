@@ -159,7 +159,9 @@ public class UserController {
             //拦截器的存在,此处若获取LoginUser失败,则拦截器出现异常
             return Result.fail(500, "拦截器异常,请联系管理员");
         }
-        User save = loginUser.getUser();
+        User save = userRepository.findById(loginUser.getUser().getId()).orElse(null);
+        if (save == null)
+            return Result.fail(404, "用户不存在");
         JpaUtils.copyNotNullProperties(user, save);
         try {
             userRepository.save(save);
