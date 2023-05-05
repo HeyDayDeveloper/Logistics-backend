@@ -111,4 +111,20 @@ public class ProductController {
         }
         return Result.success(productVOList);
     }
+
+    @GetMapping("query/{name}")
+    @Operation(summary = "查询物资", description = "通过name查询物资")
+    public ResponseEntity<Result<List<ProductVO>>> queryProduct(@PathVariable String name) {
+        Product save = productRepository.findByName(name);
+        if (save != null) {
+            List<Product> productList = productRepository.findAllByName(name);
+            List<ProductVO> productVOList = productList.stream().map(ProductVO::convert).toList();
+            for (ProductVO productVO : productVOList) {
+                productVO.setCategory(categoryRepository.findById(productVO.getCategoryId()).orElse(null));
+            }
+            return Result.success(productVOList);
+        } else {
+            return Result.fail(404, "该物资不存在");
+        }
+    }
 }
