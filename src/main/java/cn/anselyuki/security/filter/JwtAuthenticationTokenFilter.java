@@ -42,13 +42,8 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
             return;
         }
-        if (SecurityContextHolder.getContext().getAuthentication() == null) {
-            filterChain.doFilter(request, response);
-            return;
-        }
         try {
             var token = AuthUtils.extractToken(request, header);
-            log.info(token);
             var jwt = AuthUtils.parseAndValidateJwt(token, secret);
             var user = retrieveAndValidateUser(jwt);
             var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
