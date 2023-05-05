@@ -111,4 +111,14 @@ public class ProductController {
         }
         return Result.success(productVOList);
     }
+
+    @GetMapping("query/{name}")
+    @Operation(summary = "查询物资", description = "根据名称查询物资")
+    public ResponseEntity<Result<ProductVO>> getProductById(@PathVariable String name) {
+        Product product = productRepository.findByName(name);
+        if (product == null) return Result.fail(404, "物资不存在");
+        ProductVO productVO = ProductVO.convert(product);
+        productVO.setCategory(categoryRepository.findById(productVO.getCategoryId()).orElse(null));
+        return Result.success(productVO);
+    }
 }

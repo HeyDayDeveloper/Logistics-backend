@@ -122,7 +122,7 @@ public class UserController {
             loginUser = (LoginUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         } catch (Exception e) {
             //拦截器的存在,此处若获取LoginUser失败,则拦截器出现异常
-            return Result.fail(500, "拦截器异常,请联系管理员");
+            return Result.fail(500, "拦截器异常或测试环境未携带token,请联系管理员");
         }
         User user = userRepository.findById(loginUser.getUser().getId()).orElse(null);
         return Result.success(new UserInfoVO(user));
@@ -157,7 +157,7 @@ public class UserController {
             loginUser = (LoginUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         } catch (Exception e) {
             //拦截器的存在,此处若获取LoginUser失败,则拦截器出现异常
-            return Result.fail(500, "拦截器异常,请联系管理员");
+            return Result.fail(500, "拦截器异常或测试环境未携带token,请联系管理员");
         }
         User save = userRepository.findById(loginUser.getUser().getId()).orElse(null);
         if (save == null)
