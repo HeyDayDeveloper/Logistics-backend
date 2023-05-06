@@ -163,6 +163,7 @@ public class UserController {
         if (save == null)
             return Result.fail(404, "用户不存在");
         JpaUtils.copyNotNullProperties(user, save);
+        save.setModifiedTime(new Date());
         try {
             userRepository.save(save);
         } catch (Exception e) {

@@ -94,6 +94,7 @@ public class ProductController {
             return Result.fail(404, "该物资不存在");
         }
         try {
+            save.setModifiedTime(new Date());
             productRepository.save(save);
         } catch (Exception e) {
             return Result.fail(403, "更新物资失败");
@@ -115,7 +116,7 @@ public class ProductController {
     @GetMapping("query/{name}")
     @Operation(summary = "根据物资名称查询物资", description = "根据物资名称查询物资")
     public ResponseEntity<Result<List<ProductVO>>> queryProduct(@PathVariable String name) {
-        List<Product> productList = productRepository.findByNameLike(name);
+        List<Product> productList = productRepository.findByNameLike('%' + name);
         List<ProductVO> productVOList = productList.stream().map(ProductVO::convert).toList();
         for (ProductVO productVO : productVOList) {
             productVO.setCategory(categoryRepository.findById(productVO.getCategoryId()).orElse(null));

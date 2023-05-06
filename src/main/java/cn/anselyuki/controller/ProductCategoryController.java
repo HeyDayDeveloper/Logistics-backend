@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author AnselYuki
@@ -59,6 +60,7 @@ public class ProductCategoryController {
             return Result.fail(404, "物资分类不存在");
         }
         try {
+            save.setModifiedTime(new Date());
             productCategoryRepository.save(save);
         } catch (Exception e) {
             e.printStackTrace();
@@ -96,10 +98,8 @@ public class ProductCategoryController {
      */
     @GetMapping("query/{name}")
     @Operation(summary = "查询物资分类", description = "根据ID查询物资")
-    public ResponseEntity<Result<ProductCategory>> queryProductCategory(@PathVariable String name) {
-        if (!productCategoryRepository.existsByName(name))
-            return Result.fail(404, "物资分类不存在");
-        ProductCategory category = productCategoryRepository.findByName(name);
+    public ResponseEntity<Result<List<ProductCategory>>> queryProductCategory(@PathVariable String name) {
+        List<ProductCategory> category = productCategoryRepository.findByNameLike('%' + name);
         return Result.success(category);
     }
 }

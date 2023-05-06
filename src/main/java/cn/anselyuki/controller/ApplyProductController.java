@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @Slf4j
@@ -58,6 +59,7 @@ public class ApplyProductController {
             return Result.fail(404, "该物资不存在");
         }
         try {
+            save.setModifiedTime(new Date());
             applyProductRepository.save(save);
         } catch (Exception e) {
             return Result.fail(403, "更新物资失败");
