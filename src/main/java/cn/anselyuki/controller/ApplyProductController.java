@@ -1,10 +1,12 @@
 package cn.anselyuki.controller;
 
 import cn.anselyuki.common.utils.JpaUtils;
+import cn.anselyuki.controller.request.ApplyInfoDTO;
+import cn.anselyuki.controller.response.ApplyInfoVO;
 import cn.anselyuki.controller.response.Result;
 import cn.anselyuki.repository.ApplyProductRepository;
 import cn.anselyuki.repository.entity.ApplyProduct;
-import cn.anselyuki.repository.entity.InStock;
+import cn.anselyuki.service.ApplyProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -22,10 +24,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ApplyProductController {
     private final ApplyProductRepository applyProductRepository;
+    private final ApplyProductService applyProductService;
 
     @PutMapping("add")
     @Operation(summary = "物资申请", description = "物资申请，UUID由内部生成并返回")
-    public ResponseEntity<Result<ApplyProduct>> addOrder(ApplyProduct applyProduct) {
+    public ResponseEntity<Result<ApplyProduct>> addOrder(@RequestBody ApplyProduct applyProduct) {
         try {
             applyProductRepository.save(applyProduct);
         } catch (Exception exception) {
@@ -36,7 +39,7 @@ public class ApplyProductController {
     }
 
     @DeleteMapping("delete/{id}")
-    @Operation(summary = "删除物资分类", description = "删除物资分类")
+    @Operation(summary = "删除入库单", description = "删除入库单")
     public ResponseEntity<Result<ApplyProduct>> deleteInStock(@PathVariable String id) {
         if (!applyProductRepository.existsById(id)) return Result.fail(404, "物资不存在");
         try {
@@ -48,13 +51,13 @@ public class ApplyProductController {
     }
 
     @PatchMapping("update")
-    @Operation(summary = "更新物资分类", description = "更新物资分类")
-    public ResponseEntity<Result<ApplyProduct>> updateInStock(@RequestBody InStock inStock) {
-        if (inStock.getId() == null || inStock.getId().isBlank()) return Result.fail(404, "物资ID不能为空");
-        ApplyProduct save = applyProductRepository.findById(inStock.getId()).orElse(null);
+    @Operation(summary = "更新入库单", description = "更新入库单")
+    public ResponseEntity<Result<ApplyProduct>> updateInStock(@RequestBody ApplyProduct applyProduct) {
+        if (applyProduct.getId() == null || applyProduct.getId().isBlank()) return Result.fail(404, "物资ID不能为空");
+        ApplyProduct save = applyProductRepository.findById(applyProduct.getId()).orElse(null);
         if (save != null) {
             // 通过工具类将非空属性拷贝到save中
-            JpaUtils.copyNotNullProperties(inStock, save);
+            JpaUtils.copyNotNullProperties(applyProduct, save);
         } else {
             return Result.fail(404, "该物资不存在");
         }
@@ -68,7 +71,7 @@ public class ApplyProductController {
     }
 
     @GetMapping("list")
-    @Operation(summary = "获取分类列表", description = "获取分类列表")
+    @Operation(summary = "获取入库单列表", description = "获取入库单列表")
     public ResponseEntity<Result<List<ApplyProduct>>> listInStock() {
         return Result.success(applyProductRepository.findAll());
     }
@@ -78,5 +81,19 @@ public class ApplyProductController {
     public ResponseEntity<Result<ApplyProduct>> queryInStock(@PathVariable String id) {
         ApplyProduct applyProduct = applyProductRepository.findById(id).orElse(null);
         return Result.success(applyProduct);
+    }
+
+    @PostMapping("apply")
+    @Operation(summary = "申请物资", description = "申请物资")
+    public ResponseEntity<Result<ApplyInfoVO>> apply(@RequestBody ApplyInfoDTO applyInfoDTO) {
+        ApplyInfoVO applyInfoVO = applyProductService.apply(applyInfoDTO);
+        return Result.success(applyInfoVO);
+    }
+
+    @PostMapping("validation")
+    @Operation(summary = "验证物资", description = "验证物资")
+    public ResponseEntity<Result<ApplyInfoVO>> validation(@RequestBody ApplyInfoDTO applyInfoDTO) {
+        ApplyInfoVO applyInfoVO = applyProductService.validation(applyInfoDTO);
+        return Result.success(applyInfoVO);
     }
 }
