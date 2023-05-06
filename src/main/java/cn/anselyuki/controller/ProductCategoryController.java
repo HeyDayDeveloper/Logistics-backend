@@ -102,4 +102,11 @@ public class ProductCategoryController {
         List<ProductCategory> category = productCategoryRepository.findByNameLike('%' + name);
         return Result.success(category);
     }
+
+    @GetMapping("list")
+    @Operation(summary = "查询物资分类列表", description = "查询物资分类列表")
+    public ResponseEntity<Result<List<ProductCategory>>> listProductCategory() {
+        List<ProductCategory> category = productCategoryRepository.findAll();
+        return Result.success(category);
+    }
 }

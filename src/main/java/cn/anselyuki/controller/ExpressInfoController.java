@@ -25,7 +25,7 @@ public class ExpressInfoController {
 
     @PutMapping("add")
     @Operation(summary = "添加物流订单", description = "添加物流订单，UUID由内部生成并返回")
-    public ResponseEntity<Result<ExpressInfo>> add(ExpressInfo expressInfo) {
+    public ResponseEntity<Result<ExpressInfo>> add(@RequestBody ExpressInfo expressInfo) {
         try {
             expressInfoRepository.save(expressInfo);
         } catch (Exception exception) {
