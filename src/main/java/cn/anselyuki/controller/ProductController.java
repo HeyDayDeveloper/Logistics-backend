@@ -50,6 +50,7 @@ public class ProductController {
             } else {
                 product = new Product(productDTO);
             }
+            product.setCreateTime(new Date());
             productRepository.save(product);
         } catch (DataIntegrityViolationException exception) {
             return Result.fail(403, "物资已经存在");
