@@ -60,7 +60,7 @@ public class UserController {
 
     /**
      * 用户注册
-     * 必须传入用户名与密码，其他信息可选
+     * 必须传入id，其他信息可选
      *
      * @param userRegisterDTO 用户信息
      * @return 注册成功的用户信息
