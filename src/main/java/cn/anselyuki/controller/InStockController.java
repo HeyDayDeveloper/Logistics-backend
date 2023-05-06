@@ -23,10 +23,8 @@ public class InStockController {
 
     @PutMapping("add")
     @Operation(summary = "添加物资分类", description = "添加物资分类，UUID由内部生成并返回")
-    public ResponseEntity<Result<InStock>> addInStock() {
-        InStock inStock;
+    public ResponseEntity<Result<InStock>> addInStock(InStock inStock) {
         try {
-            inStock = new InStock();
             inStockRepository.save(inStock);
         } catch (Exception exception) {
             exception.printStackTrace();

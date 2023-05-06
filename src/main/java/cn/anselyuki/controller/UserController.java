@@ -72,7 +72,7 @@ public class UserController {
         User user = new User(userRegisterDTO);
         String encode = new BCryptPasswordEncoder().encode(user.getPassword());
         //设置id为空,防止前端传入id,用于生成UUID,注册接口默认注册为普通用户
-        user.setId(null).setType(1).setPassword(encode).setCreateTime(new Date()).setStatus(1);
+        user.setId(null).setType(0).setPassword(encode).setCreateTime(new Date()).setStatus(1);
         UserInfoVO userInfo;
         try {
             User save = userRepository.save(user);

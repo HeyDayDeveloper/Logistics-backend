@@ -24,10 +24,8 @@ public class ApplyProductController {
 
     @PutMapping("add")
     @Operation(summary = "物资申请", description = "物资申请，UUID由内部生成并返回")
-    public ResponseEntity<Result<ApplyProduct>> addOrder() {
-        ApplyProduct applyProduct;
+    public ResponseEntity<Result<ApplyProduct>> addOrder(ApplyProduct applyProduct) {
         try {
-            applyProduct = new ApplyProduct();
             applyProductRepository.save(applyProduct);
         } catch (Exception exception) {
             exception.printStackTrace();
