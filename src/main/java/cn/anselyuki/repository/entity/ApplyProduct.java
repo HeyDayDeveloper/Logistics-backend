@@ -18,6 +18,7 @@ public class ApplyProduct implements Persistable<String> {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
     private String pid;
+    private String productName;
     private String uid;
     private Integer num;
     private Integer status;

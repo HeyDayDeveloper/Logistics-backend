@@ -92,8 +92,7 @@ public class ApplyProductController {
 
     @PostMapping("validation")
     @Operation(summary = "验证物资", description = "验证物资")
-    public ResponseEntity<Result<ApplyInfoVO>> validation(@RequestBody ApplyInfoDTO applyInfoDTO) {
-        ApplyInfoVO applyInfoVO = applyProductService.validation(applyInfoDTO);
-        return Result.success(applyInfoVO);
+    public ResponseEntity<Result<Object>> validation(String id, String pid) {
+        return applyProductService.validation(id, pid);
     }
 }
