@@ -84,7 +84,7 @@ public class ProductCategoryController {
         try {
             productCategoryRepository.deleteById(id);
         } catch (Exception e) {
-            Result.fail(403, "删除物资分类失败");
+            return Result.fail(403, "删除物资分类失败");
         }
         return Result.success(null);
     }

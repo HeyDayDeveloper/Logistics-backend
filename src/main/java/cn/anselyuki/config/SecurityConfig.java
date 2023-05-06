@@ -1,6 +1,5 @@
 package cn.anselyuki.config;
 
-import cn.anselyuki.common.utils.SpringUtils;
 import cn.anselyuki.security.filter.JwtAuthenticationTokenFilter;
 import cn.anselyuki.security.handler.AccessDeniedHandlerImpl;
 import cn.anselyuki.security.handler.AuthenticationEntryPointImpl;
@@ -34,7 +33,6 @@ public class SecurityConfig {
     private static final String[] URL_PERMIT_ALL = {
             "/",
             "/version",
-            "/swagger-ui.html",
             "/v3/api-docs/**",
             "/swagger-ui/**",
     };
@@ -70,7 +68,7 @@ public class SecurityConfig {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         //允许匿名访问的接口，如果是测试想要方便点配置application.yml中的jwt.enabled为false即可
-        if (enabled && SpringUtils.getActiveProfile().equals("dev")) {
+        if (enabled) {
             http.authorizeHttpRequests(authorize ->
                     authorize.requestMatchers(URL_WHITELIST).anonymous()
                             .requestMatchers(URL_PERMIT_ALL).permitAll()

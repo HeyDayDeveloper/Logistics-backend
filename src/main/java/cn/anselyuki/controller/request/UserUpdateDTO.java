@@ -8,6 +8,7 @@ import java.util.Date;
 @Data
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class UserUpdateDTO {
+    private String id;
     private String username;
     private String nickname;
     private String email;

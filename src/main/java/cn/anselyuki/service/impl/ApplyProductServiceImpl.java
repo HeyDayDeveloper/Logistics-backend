@@ -18,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 @Service
 @Transactional
@@ -31,9 +32,8 @@ public class ApplyProductServiceImpl implements ApplyProductService {
     public ApplyInfoVO apply(ApplyInfoDTO applyInfoDTO) {
         ApplyProduct applyProduct = new ApplyProduct();
         BeanUtils.copyProperties(applyInfoDTO, applyProduct);
-        applyProduct.setCreateTime(new Date());
+
         ApplyInfoVO applyInfoVO = new ApplyInfoVO();
-        BeanUtils.copyProperties(applyProductRepository.save(applyProduct), applyInfoVO);
         String uid = applyInfoDTO.getUid();
         User user = userRepository.findById(uid).orElse(null);
         UserInfoVO userInfoVO = new UserInfoVO();
@@ -41,6 +41,11 @@ public class ApplyProductServiceImpl implements ApplyProductService {
             BeanUtils.copyProperties(user, userInfoVO);
         }
         applyInfoVO.setUserInfo(userInfoVO);
+        applyProduct.setPhoneNumber(userInfoVO.getPhoneNumber());
+        applyProduct.setEmail(userInfoVO.getEmail());
+        applyProduct.setStatus(0);
+        applyProduct.setCreateTime(new Date());
+        BeanUtils.copyProperties(applyProductRepository.save(applyProduct), applyInfoVO);
         return applyInfoVO;
     }
 
@@ -63,7 +68,15 @@ public class ApplyProductServiceImpl implements ApplyProductService {
             return Result.fail(403, "物资数量不足");
         }
         product.setNum(num - applyNum);
+        applyProduct.setStatus(1);
+        applyProduct.setPid(pid);
         productRepository.save(product);
+        applyProductRepository.save(applyProduct);
         return Result.success(null);
+    }
+
+    @Override
+    public List<ApplyProduct> getListByDegree() {
+        return applyProductRepository.findByOrderByDegreeDesc();
     }
 }

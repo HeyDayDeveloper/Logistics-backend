@@ -2,6 +2,7 @@ package cn.anselyuki.controller;
 
 import cn.anselyuki.common.utils.JpaUtils;
 import cn.anselyuki.controller.request.ApplyInfoDTO;
+import cn.anselyuki.controller.request.ValidationDTO;
 import cn.anselyuki.controller.response.ApplyInfoVO;
 import cn.anselyuki.controller.response.Result;
 import cn.anselyuki.repository.ApplyProductRepository;
@@ -26,26 +27,14 @@ public class ApplyProductController {
     private final ApplyProductRepository applyProductRepository;
     private final ApplyProductService applyProductService;
 
-    @PutMapping("add")
-    @Operation(summary = "物资申请", description = "物资申请，UUID由内部生成并返回")
-    public ResponseEntity<Result<ApplyProduct>> addOrder(@RequestBody ApplyProduct applyProduct) {
-        try {
-            applyProductRepository.save(applyProduct);
-        } catch (Exception exception) {
-            exception.printStackTrace();
-            return Result.fail(500, "系统内部失败,请检查日志");
-        }
-        return Result.success(applyProduct);
-    }
-
     @DeleteMapping("delete/{id}")
     @Operation(summary = "删除入库单", description = "删除入库单")
     public ResponseEntity<Result<ApplyProduct>> deleteInStock(@PathVariable String id) {
-        if (!applyProductRepository.existsById(id)) return Result.fail(404, "物资不存在");
+        if (!applyProductRepository.existsById(id)) return Result.fail(404, "物流订单不存在");
         try {
             applyProductRepository.deleteById(id);
         } catch (Exception e) {
-            Result.fail(403, "删除物资失败");
+            return Result.fail(403, "删除物流订单失败");
         }
         return Result.success(null);
     }
@@ -73,11 +62,12 @@ public class ApplyProductController {
     @GetMapping("list")
     @Operation(summary = "获取入库单列表", description = "获取入库单列表")
     public ResponseEntity<Result<List<ApplyProduct>>> listInStock() {
-        return Result.success(applyProductRepository.findAll());
+        List<ApplyProduct> applyProductList = applyProductService.getListByDegree();
+        return Result.success(applyProductList);
     }
 
     @GetMapping("query/{id}")
-    @Operation(summary = "查询入库单分类", description = "查询入库单分类")
+    @Operation(summary = "查询入库单", description = "查询入库单")
     public ResponseEntity<Result<ApplyProduct>> queryInStock(@PathVariable String id) {
         ApplyProduct applyProduct = applyProductRepository.findById(id).orElse(null);
         return Result.success(applyProduct);
@@ -92,7 +82,9 @@ public class ApplyProductController {
 
     @PostMapping("validation")
     @Operation(summary = "验证物资", description = "验证物资")
-    public ResponseEntity<Result<Object>> validation(String id, String pid) {
+    public ResponseEntity<Result<Object>> validation(@RequestBody ValidationDTO validationDTO) {
+        String id = validationDTO.getId();
+        String pid = validationDTO.getPid();
         return applyProductService.validation(id, pid);
     }
 }

@@ -16,7 +16,7 @@ import java.util.Date;
 import java.util.List;
 
 @Slf4j
-@Tag(name = "ExpressInfo", description = "物资分类相关接口")
+@Tag(name = "ExpressInfo", description = "物流订单相关接口")
 @RequestMapping("express")
 @RestController
 @RequiredArgsConstructor
@@ -36,19 +36,19 @@ public class ExpressInfoController {
     }
 
     @DeleteMapping("delete/{id}")
-    @Operation(summary = "删除物资分类", description = "删除物资分类")
+    @Operation(summary = "删除物流订单", description = "删除物流订单")
     public ResponseEntity<Result<Void>> delete(@PathVariable String id) {
-        if (!expressInfoRepository.existsById(id)) return Result.fail(404, "物资不存在");
+        if (!expressInfoRepository.existsById(id)) return Result.fail(404, "物流订单不存在");
         try {
             expressInfoRepository.deleteById(id);
         } catch (Exception e) {
-            Result.fail(403, "删除物资失败");
+            return Result.fail(403, "删除物流订单失败");
         }
         return Result.success(null);
     }
 
     @PatchMapping("update")
-    @Operation(summary = "更新物资分类", description = "更新物资分类")
+    @Operation(summary = "更新物流订单", description = "更新物流订单")
     public ResponseEntity<Result<ExpressInfo>> update(@RequestBody OutStock outStock) {
         if (outStock.getId() == null || outStock.getId().isBlank()) return Result.fail(404, "物资ID不能为空");
         ExpressInfo save = expressInfoRepository.findById(outStock.getId()).orElse(null);
@@ -56,25 +56,25 @@ public class ExpressInfoController {
             // 通过工具类将非空属性拷贝到save中
             JpaUtils.copyNotNullProperties(outStock, save);
         } else {
-            return Result.fail(404, "该物资不存在");
+            return Result.fail(404, "该物流订单不存在");
         }
         try {
             save.setModifiedTime(new Date());
             expressInfoRepository.save(save);
         } catch (Exception e) {
-            return Result.fail(403, "更新物资失败");
+            return Result.fail(403, "更新物流订单失败");
         }
         return Result.success(save);
     }
 
     @GetMapping("list")
-    @Operation(summary = "获取分类列表", description = "获取分类列表")
+    @Operation(summary = "获取物流订单列表", description = "获取物流订单列表")
     public ResponseEntity<Result<List<ExpressInfo>>> list() {
         return Result.success(expressInfoRepository.findAll());
     }
 
     @GetMapping("query/{id}")
-    @Operation(summary = "查询入库单分类", description = "查询入库单分类")
+    @Operation(summary = "查询物流订单", description = "根据ID查询物流订单")
     public ResponseEntity<Result<ExpressInfo>> query(@PathVariable String id) {
         ExpressInfo expressInfo = expressInfoRepository.findById(id).orElse(null);
         return Result.success(expressInfo);

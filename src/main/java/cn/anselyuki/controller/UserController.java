@@ -94,11 +94,11 @@ public class UserController {
     @Operation(summary = "删除用户", description = "删除用户")
     public ResponseEntity<Result<Object>> delete(@PathVariable String id) {
         if (!userRepository.existsById(id))
-            return Result.fail(404, "物资不存在");
+            return Result.fail(404, "用户不存在");
         try {
             userRepository.deleteById(id);
         } catch (Exception e) {
-            Result.fail(403, "删除物资失败");
+            return Result.fail(403, "删除用户失败");
         }
         return Result.success(null);
     }
@@ -151,15 +151,11 @@ public class UserController {
 
     @PatchMapping("update")
     @Operation(summary = "更新用户信息", description = "更新用户信息")
-    public ResponseEntity<Result<Object>> update(@RequestBody UserUpdateDTO user) {
-        LoginUser loginUser;
-        try {
-            loginUser = (LoginUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        } catch (Exception e) {
-            //拦截器的存在,此处若获取LoginUser失败,则拦截器出现异常
-            return Result.fail(500, "拦截器异常或测试环境未携带token,请联系管理员");
+    public ResponseEntity<Result<Object>> adminUpdate(@RequestBody UserUpdateDTO user) {
+        if (user.getId() == null) {
+            return Result.fail(403, "用户ID不能为空");
         }
-        User save = userRepository.findById(loginUser.getUser().getId()).orElse(null);
+        User save = userRepository.findById(user.getId()).orElse(null);
         if (save == null)
             return Result.fail(404, "用户不存在");
         JpaUtils.copyNotNullProperties(user, save);
@@ -170,5 +166,14 @@ public class UserController {
             return Result.fail(403, "更新失败");
         }
         return Result.success(save);
+    }
+
+    @GetMapping("query/{id}")
+    @Operation(summary = "通过ID查询用户", description = "通过ID查询用户")
+    public ResponseEntity<Result<User>> query(@PathVariable String id) {
+        User user = userRepository.findById(id).orElse(null);
+        if (user == null)
+            return Result.fail(404, "用户不存在");
+        return Result.success(user);
     }
 }
