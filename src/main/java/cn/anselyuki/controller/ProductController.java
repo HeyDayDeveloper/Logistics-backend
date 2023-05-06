@@ -111,4 +111,25 @@ public class ProductController {
         }
         return Result.success(productVOList);
     }
+
+    @GetMapping("query/{name}")
+    @Operation(summary = "根据物资名称查询物资", description = "根据物资名称查询物资")
+    public ResponseEntity<Result<List<ProductVO>>> queryProduct(@PathVariable String name) {
+        List<Product> productList = productRepository.findByNameLike(name);
+        List<ProductVO> productVOList = productList.stream().map(ProductVO::convert).toList();
+        for (ProductVO productVO : productVOList) {
+            productVO.setCategory(categoryRepository.findById(productVO.getCategoryId()).orElse(null));
+        }
+        return Result.success(productVOList);
+    }
+
+    @GetMapping("queryById/{id}")
+    @Operation(summary = "根据物资ID查询物资", description = "根据物资ID查询物资")
+    public ResponseEntity<Result<ProductVO>> queryProductById(@PathVariable String id) {
+        Product product = productRepository.findById(id).orElse(null);
+        if (product == null) return Result.fail(404, "物资不存在");
+        ProductVO productVO = ProductVO.convert(product);
+        productVO.setCategory(categoryRepository.findById(productVO.getCategoryId()).orElse(null));
+        return Result.success(productVO);
+    }
 }
