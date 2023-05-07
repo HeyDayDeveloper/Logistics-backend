@@ -18,7 +18,7 @@ public class OutStock {
     private String id;
     private String pid;
     private String uid;
-    private String recipientId;
+    private String address;
     private Integer num;
     private String remark;
     private Date createTime;

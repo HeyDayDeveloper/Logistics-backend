@@ -11,7 +11,6 @@ import cn.anselyuki.repository.entity.ApplyProduct;
 import cn.anselyuki.repository.entity.Product;
 import cn.anselyuki.repository.entity.User;
 import cn.anselyuki.service.ApplyProductService;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +20,6 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-@Transactional
 @RequiredArgsConstructor
 public class ApplyProductServiceImpl implements ApplyProductService {
     private final ApplyProductRepository applyProductRepository;
@@ -72,6 +70,8 @@ public class ApplyProductServiceImpl implements ApplyProductService {
         applyProduct.setPid(pid);
         productRepository.save(product);
         applyProductRepository.save(applyProduct);
+
+
         return Result.success(null);
     }
 
