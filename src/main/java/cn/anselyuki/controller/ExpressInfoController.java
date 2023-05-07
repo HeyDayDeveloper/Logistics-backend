@@ -4,7 +4,6 @@ import cn.anselyuki.common.utils.JpaUtils;
 import cn.anselyuki.controller.response.Result;
 import cn.anselyuki.repository.ExpressInfoRepository;
 import cn.anselyuki.repository.entity.ExpressInfo;
-import cn.anselyuki.repository.entity.OutStock;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -50,12 +49,12 @@ public class ExpressInfoController {
 
     @PatchMapping("update")
     @Operation(summary = "更新物流订单", description = "更新物流订单")
-    public ResponseEntity<Result<ExpressInfo>> update(@RequestBody OutStock outStock) {
-        if (outStock.getId() == null || outStock.getId().isBlank()) return Result.fail(404, "物资ID不能为空");
-        ExpressInfo save = expressInfoRepository.findById(outStock.getId()).orElse(null);
+    public ResponseEntity<Result<ExpressInfo>> update(@RequestBody ExpressInfo expressInfo) {
+        if (expressInfo.getId() == null || expressInfo.getId().isBlank()) return Result.fail(404, "物资ID不能为空");
+        ExpressInfo save = expressInfoRepository.findById(expressInfo.getId()).orElse(null);
         if (save != null) {
             // 通过工具类将非空属性拷贝到save中
-            JpaUtils.copyNotNullProperties(outStock, save);
+            JpaUtils.copyNotNullProperties(expressInfo, save);
         } else {
             return Result.fail(404, "该物流订单不存在");
         }
