@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class ApplyInfoVO {
+    private String id;
     private String productName;
     private Integer degree;
     private String address;

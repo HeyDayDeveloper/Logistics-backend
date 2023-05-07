@@ -4,6 +4,7 @@ import cn.anselyuki.common.utils.JpaUtils;
 import cn.anselyuki.controller.request.ApplyInfoDTO;
 import cn.anselyuki.controller.request.ValidationDTO;
 import cn.anselyuki.controller.response.ApplyInfoVO;
+import cn.anselyuki.controller.response.OutStockVO;
 import cn.anselyuki.controller.response.Result;
 import cn.anselyuki.repository.ApplyProductRepository;
 import cn.anselyuki.repository.entity.ApplyProduct;
@@ -76,15 +77,17 @@ public class ApplyProductController {
     @PostMapping("apply")
     @Operation(summary = "申请物资", description = "申请物资")
     public ResponseEntity<Result<ApplyInfoVO>> apply(@RequestBody ApplyInfoDTO applyInfoDTO) {
+        log.info("申请物资：{}", applyInfoDTO);
         ApplyInfoVO applyInfoVO = applyProductService.apply(applyInfoDTO);
         return Result.success(applyInfoVO);
     }
 
     @PostMapping("validation")
     @Operation(summary = "验证物资", description = "验证物资")
-    public ResponseEntity<Result<Object>> validation(@RequestBody ValidationDTO validationDTO) {
+    public ResponseEntity<Result<OutStockVO>> validation(@RequestBody ValidationDTO validationDTO) {
         String id = validationDTO.getId();
         String pid = validationDTO.getPid();
-        return applyProductService.validation(id, pid);
+        String remark = validationDTO.getRemark();
+        return applyProductService.validation(id, pid, remark);
     }
 }

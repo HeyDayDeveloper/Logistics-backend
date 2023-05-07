@@ -6,4 +6,5 @@ import lombok.Data;
 public class ValidationDTO {
     private String id;
     private String pid;
+    private String remark;
 }
