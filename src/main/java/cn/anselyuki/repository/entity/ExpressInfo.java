@@ -18,6 +18,8 @@ public class ExpressInfo {
     private String id;
     private String address;
     private String phoneNumber;
+    private String productName;
+    private String userName;
     private Integer status;
     private Date createTime;
     private Date modifiedTime;

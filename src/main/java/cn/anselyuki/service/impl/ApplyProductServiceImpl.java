@@ -92,7 +92,8 @@ public class ApplyProductServiceImpl implements ApplyProductService {
         } catch (Exception e) {
             return Result.fail(500, "出库失败");
         }
-        applyProductRepository.deleteById(id);
+        applyProduct.setStatus(1).setNum(applyNum).setPid(pid);
+        applyProductRepository.save(applyProduct);
         return Result.success(outStockService.queryForOutStock(outStock.getId()));
     }
 
