@@ -32,6 +32,7 @@ public class SecurityConfig {
      */
     private static final String[] URL_PERMIT_ALL = {
             "/",
+            "/test",
             "/user/login",
             "/user/register",
             "/version",

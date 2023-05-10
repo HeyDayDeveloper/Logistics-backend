@@ -109,7 +109,11 @@ public class ProductController {
         List<Product> productList = productRepository.findAll();
         List<ProductVO> productVOList = productList.stream().map(ProductVO::convert).toList();
         for (ProductVO productVO : productVOList) {
-            productVO.setCategory(categoryRepository.findById(productVO.getCategoryId()).orElse(null));
+            try {
+                productVO.setCategory(categoryRepository.findById(productVO.getCategoryId()).orElse(null));
+            } catch (Exception e) {
+                log.error("物资分类不存在");
+            }
         }
         return Result.success(productVOList);
     }
