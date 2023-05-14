@@ -26,15 +26,13 @@ public class SecurityConfig {
      */
     private static final String[] URL_WHITELIST = {
             "/user/login",
+            "/user/register",
     };
     /**
      * 允许任何人访问
      */
     private static final String[] URL_PERMIT_ALL = {
             "/",
-            "/test",
-            "/user/login",
-            "/user/register",
             "/version",
             "/v3/api-docs/**",
             "/swagger-ui/**",
