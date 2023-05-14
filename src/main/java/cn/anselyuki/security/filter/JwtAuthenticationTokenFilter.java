@@ -2,8 +2,12 @@ package cn.anselyuki.security.filter;
 
 import cn.anselyuki.common.utils.AuthUtils;
 import cn.anselyuki.common.utils.RedisCache;
+import cn.anselyuki.common.utils.SpringUtils;
+import cn.anselyuki.common.utils.WebUtils;
+import cn.anselyuki.controller.response.Result;
 import cn.anselyuki.security.LoginUser;
 import cn.hutool.jwt.JWT;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -11,12 +15,14 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
@@ -42,6 +48,10 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
             return;
         }
+        if (!StringUtils.hasText(request.getHeader(header))) {
+            filterChain.doFilter(request, response);
+            return;
+        }
         try {
             var token = AuthUtils.extractToken(request, header);
             var jwt = AuthUtils.parseAndValidateJwt(token, secret);
@@ -49,15 +59,18 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
             var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);
         } catch (Exception e) {
-            log.info(e.getMessage());
-        } finally {
-            filterChain.doFilter(request, response);
+            log.warn(e.getMessage());
+            Result<Void> result = new Result<>(HttpStatus.FORBIDDEN.value(), e.getMessage(), null, SpringUtils.getActiveProfile());
+            String resultString = new ObjectMapper().writeValueAsString(result);
+            WebUtils.renderString(response, resultString, HttpStatus.FORBIDDEN.value());
+            return;
         }
         if (Objects.nonNull(SecurityContextHolder.getContext().getAuthentication())) {
             log.info("[{}] Access [{}]",
                     SecurityContextHolder.getContext().getAuthentication().getName(),
                     request.getRequestURI());
         }
+        filterChain.doFilter(request, response);
     }
 
     private LoginUser retrieveAndValidateUser(JWT jwt) throws AuthenticationException {
