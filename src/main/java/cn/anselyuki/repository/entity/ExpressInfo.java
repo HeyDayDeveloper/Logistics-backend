@@ -16,6 +16,7 @@ public class ExpressInfo {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
+    private String sendAddress;
     private String address;
     private String phoneNumber;
     private String productName;
