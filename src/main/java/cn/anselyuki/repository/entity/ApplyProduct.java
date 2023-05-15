@@ -26,5 +26,6 @@ public class ApplyProduct {
     private String phoneNumber;
     private String email;
     private String address;
+    private String sendAddress;
     private Integer degree;
 }
