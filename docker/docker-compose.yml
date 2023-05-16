@@ -25,7 +25,7 @@ services:
       - default
     build:
       context: ../
-      dockerfile: Dockerfile
+      dockerfile: dockerfile
     container_name: Logistics-backend
     command: --spring.profiles.active=prod
     ports:
