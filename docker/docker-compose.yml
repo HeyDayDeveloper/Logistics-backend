@@ -18,14 +18,14 @@ services:
       MYSQL_ROOT_PASSWORD: 18670054724
       MYSQL_DATABASE: logisticSystem
     ports:
-      - "3306:3306"
+      - "3307:3306"
     restart: always
   logistics_backend:
     networks:
       - default
     build:
       context: ../
-      dockerfile: dockerfile
+      dockerfile: Dockerfile
     container_name: Logistics-backend
     command: --spring.profiles.active=prod
     ports:
