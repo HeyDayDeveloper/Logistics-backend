@@ -1,9 +1,6 @@
 # Logistics-backend 项目简介
 
-使用 Java 撰写的物资管理系统后端,[项目地址](https://github.com/HeyDayDeveloper/Logistics-backend)
-
-![GitHub stars](https://img.shields.io/github/stars/HeyDayDeveloper/Logistics-backend?style=for-the-badge&logo=github)
-![Languages](https://img.shields.io/github/languages/top/HeyDayDeveloper/Logistics-backend?style=for-the-badge)
+使用 Java 撰写的应急物资管理系统后端,[项目地址](https://github.com/HeyDayDeveloper/Logistics-backend)
 
 ## 开发技术栈
 
@@ -139,7 +136,7 @@ docker-compose up -d
 ## Git 提交规范
 
 本项目使用 [AngularJS Git Commit Message Conventions](https://docs.google.com/document/d/1QrDFcIiPjSLDn3EL15IJygNPiHORgU1_OOAqWjiDU5Y/edit#heading=h.greljkmo14y0)
-规范,请在提交代码前阅读,简易说明参照[这里](/docs/commit.md)
+规范,请在提交代码前阅读,简易说明参照[这里](https://github.com/HeyDayDeveloper/Logistics-backend/blob/master/docs/commit.md)
 
 > 可以在 IDEA 中安装插件`Git Commit Template`来自动化提交规范
 
