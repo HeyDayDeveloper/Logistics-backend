@@ -107,7 +107,7 @@
 
 执行完毕上述两个任务并且成功运行完成后,会在`build/libs`目录下生成一个`Logistics-backend.jar`文件,运行此文件即可启动项目
 
-```java
+```shell
 java -jar Logistics-backend.jar
 ```
 
