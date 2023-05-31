@@ -75,7 +75,7 @@
 
 **在 IDE 内运行项目**
 
-如果您使用的是 IDEA,可以直接运行`LogisticsApplication`中的`main`方法启动项目
+如果您使用的是 IDEA,可以直接运行`MainApplication`中的`main`方法启动项目
 
 **在命令行运行项目**
 
