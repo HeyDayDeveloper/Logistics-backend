@@ -47,7 +47,6 @@ public class ApplyProductServiceImpl implements ApplyProductService {
         if (user != null) {
             BeanUtils.copyProperties(user, userInfoVO);
         }
-        ;
         applyInfoVO.setUserInfo(userInfoVO);
         applyProduct.setPhoneNumber(userInfoVO.getPhoneNumber());
         applyProduct.setEmail(userInfoVO.getEmail());

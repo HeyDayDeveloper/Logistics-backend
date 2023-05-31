@@ -1,5 +1,6 @@
 package cn.anselyuki.common.utils;
 
+import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -20,7 +21,7 @@ public class SpringUtils implements ApplicationContextAware {
     }
 
     @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+    public void setApplicationContext(@NotNull ApplicationContext applicationContext) throws BeansException {
         if (SpringUtils.applicationContext == null) {
             SpringUtils.applicationContext = applicationContext;
         }
