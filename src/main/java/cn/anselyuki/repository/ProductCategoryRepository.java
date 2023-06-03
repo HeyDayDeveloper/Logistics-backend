@@ -1,6 +1,6 @@
 package cn.anselyuki.repository;
 
-import cn.anselyuki.repository.entity.ProductCategory;
+import cn.anselyuki.repository.relation.ProductCategory;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

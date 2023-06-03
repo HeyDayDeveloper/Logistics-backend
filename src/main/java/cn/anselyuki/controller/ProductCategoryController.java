@@ -4,7 +4,7 @@ import cn.anselyuki.common.utils.JpaUtils;
 import cn.anselyuki.controller.request.ProductCategoryDTO;
 import cn.anselyuki.controller.response.Result;
 import cn.anselyuki.repository.ProductCategoryRepository;
-import cn.anselyuki.repository.entity.ProductCategory;
+import cn.anselyuki.repository.relation.ProductCategory;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;

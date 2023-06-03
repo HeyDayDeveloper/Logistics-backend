@@ -1,7 +1,7 @@
 package cn.anselyuki.controller.response;
 
 import cn.anselyuki.repository.entity.Product;
-import cn.anselyuki.repository.entity.ProductCategory;
+import cn.anselyuki.repository.relation.ProductCategory;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;

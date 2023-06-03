@@ -1,4 +1,4 @@
-package cn.anselyuki.repository.entity;
+package cn.anselyuki.repository.relation;
 
 import cn.anselyuki.controller.request.ProductCategoryDTO;
 import jakarta.persistence.*;
@@ -13,7 +13,6 @@ import java.util.Date;
 @Entity
 @Accessors(chain = true)
 @Table(schema = "logisticSystem", name = "tb_product_category")
-
 @NoArgsConstructor
 public class ProductCategory {
     @Id
