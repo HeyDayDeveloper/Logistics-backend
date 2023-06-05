@@ -14,8 +14,10 @@ import java.util.Date;
 @NoArgsConstructor
 public class OutStockInfo {
     @Id
+    @Column(length = 36)
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
+    @Column(length = 36)
     private String pid;
     private Integer count;
     private Date createTime;

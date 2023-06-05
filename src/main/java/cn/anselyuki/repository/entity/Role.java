@@ -14,9 +14,12 @@ import java.util.Date;
 @NoArgsConstructor
 public class Role {
     @Id
+    @Column(length = 36)
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
+    @Column(length = 32)
     private String roleName;
+    @Column(length = 127)
     private String remark;
     private Date createTime;
     private Date modifiedTime;

@@ -12,6 +12,7 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor
 public class Demand {
     @Id
+    @Column(length = 36)
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
     private Double distance;

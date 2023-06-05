@@ -1,5 +1,6 @@
 package cn.anselyuki.repository.relation;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -14,7 +15,9 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor
 public class UserRole {
     @Id
+    @Column(length = 36)
     private String userId;
     @Id
+    @Column(length = 36)
     private String roleId;
 }

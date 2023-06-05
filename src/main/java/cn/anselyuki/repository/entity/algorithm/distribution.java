@@ -12,8 +12,11 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor
 public class distribution {
     @Id
+    @Column(length = 36)
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
+    @Column(length = 127)
     private String address;
+    @Column(length = 127)
     private String remark;
 }

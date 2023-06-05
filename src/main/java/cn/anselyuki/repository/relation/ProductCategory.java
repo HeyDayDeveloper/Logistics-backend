@@ -16,11 +16,14 @@ import java.util.Date;
 @NoArgsConstructor
 public class ProductCategory {
     @Id
+    @Column(length = 36)
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
-    @Column(unique = true)
+    @Column(unique = true, length = 32)
     private String name;
+    @Column(length = 127)
     private String remark;
+
     private Date createTime;
     private Date modifiedTime;
 

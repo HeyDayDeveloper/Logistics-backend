@@ -14,12 +14,18 @@ import java.util.Date;
 @NoArgsConstructor
 public class LogSetting {
     @Id
+    @Column(length = 36)
     @GeneratedValue(strategy = GenerationType.UUID)
     private String TableName;
+    @Column(length = 32)
     private String businessName;
+    @Column(length = 127)
     private String UrlTemplate;
+    @Column(length = 32)
     private String createUser;
     private Date createTime;
+    @Column(length = 512)
     private String deleteScript;
+    @Column(length = 512)
     private String updateScript;
 }
