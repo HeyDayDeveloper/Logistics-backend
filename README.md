@@ -1,6 +1,6 @@
 # Logistics-backend 项目简介
 
-使用 Java 撰写的应急物资管理系统后端,[项目地址](https://github.com/HeyDayDeveloper/Logistics-backend)
+使用 Java 撰写的应急物资调度系统后端,[项目地址](https://github.com/HeyDayDeveloper/Logistics-backend)
 
 ## 开发技术栈
 
@@ -113,9 +113,9 @@ java -jar Logistics-backend.jar
 
 ### 使用 Docker 运行
 
-> 请确保您已经安装了 Docker 与 Docker-Compose
+请确保您已经安装了 Docker 与 Docker-Compose 组件
 
-**使用 Dockerfile 打包项目**
+**  Dockerfile 打包项目**
 
 项目的 Dockerfile 位于项目根目录下,使用 Dockerfile 打包项目
 
