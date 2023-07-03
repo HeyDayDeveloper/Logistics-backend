@@ -1,7 +1,7 @@
 plugins {
     id 'java'
     id "io.freefair.lombok" version "8.0.1"
-    id "org.springframework.boot" version "3.0.6"
+    id "org.springframework.boot" version "3.1.1"
     id "io.spring.dependency-management" version "1.1.0"
 }
 
@@ -33,10 +33,10 @@ dependencies {
     implementation 'mysql:mysql-connector-java:8.0.32'
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0'
 
-    implementation 'cn.hutool:hutool-core:5.8.18'
-    implementation 'cn.hutool:hutool-jwt:5.8.18'
+    implementation 'cn.hutool:hutool-core:5.8.20'
+    implementation 'cn.hutool:hutool-jwt:5.8.20'
     //引入新版本的snakeyaml替换较旧版本，解决CVE漏洞
-    implementation 'org.yaml:snakeyaml:2.0'
+//    implementation 'org.yaml:snakeyaml:2.0'
 }
 
 test {
